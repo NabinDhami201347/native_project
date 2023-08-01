@@ -23,8 +23,6 @@ const ProfileCard = () => {
     useState<ImagePickerResponse | null>(null);
   const {user, updateUser} = useAuthContext();
 
-  console.log(user, 'user');
-
   const pickImage = () => {
     launchImageLibrary(
       {mediaType: 'photo', includeBase64: false, maxHeight: 120, maxWidth: 120},

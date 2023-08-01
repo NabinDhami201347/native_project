@@ -1,121 +1,72 @@
+import React, {useRef, useState} from 'react';
 import {
-  TextInput,
   View,
   StyleSheet,
   TouchableOpacity,
   Text,
+  TextInput,
 } from 'react-native';
-import React, {useState, useRef} from 'react';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import {useForm} from 'react-hook-form';
+import {z, ZodType} from 'zod';
+import {zodResolver} from '@hookform/resolvers/zod';
 
+import CustomButton from '../../components/CustomButton';
+import ControlledInput from '../../components/ControlledInput';
 import {publicInstance} from '../../api';
 import {useAuthContext} from '../../contexts/Auth';
-import CustomButton from '../../components/CustomButton';
 
-interface Error {
-  field: string;
-  message: string;
-}
+const UserSchema = z.object({
+  email: z.string().email('Invalid email address:'),
+  password: z.string().min(8, 'Password must be at least 8 characters long'),
+});
+
+type UserType = ZodType<typeof UserSchema>;
 
 const Login = ({navigation}: any) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [errors, setErrors] = useState<Error[]>([]);
+  const [error, setError] = useState('');
+  const {control, handleSubmit} = useForm<UserType>({
+    resolver: zodResolver(UserSchema),
+  });
+  const {setTokens} = useAuthContext();
+
   const emailInputRef = useRef<TextInput | null>(null);
   const passwordInputRef = useRef<TextInput | null>(null);
 
-  const {setTokens} = useAuthContext();
-
-  const handlePress = async () => {
+  const handlePress = async (user: UserType) => {
     try {
-      setErrors([]); // Clear any previous errors
-      const {data} = await publicInstance.post('/auth/login', {
-        email,
-        password,
-      });
+      const {data} = await publicInstance.post('/auth/login', user);
+
       setTokens(data.access_token, data.refresh_token);
     } catch (error: any) {
-      if (error.response && error.response.data) {
-        if (error.response.data.errors) {
-          const responseErrors: Error[] = error.response.data.errors;
-          setErrors(responseErrors); // Set the errors array with specific field errors
-        } else if (error.response.data.error) {
-          setErrors([
-            {
-              field: 'general',
-              message: error.response.data.error,
-            },
-          ]); // Set the error message with the key "error"
-        } else {
-          setErrors([
-            {
-              field: 'general',
-              message: 'An error occurred. Please try again.',
-            },
-          ]); // Fallback error message
-        }
-      } else {
-        setErrors([
-          {
-            field: 'general',
-            message: 'An error occurred. Please try again.',
-          },
-        ]); // Fallback error message
-      }
+      setError(error.response.data.error);
+      console.error(error.response.data.error);
     }
-  };
-
-  const getErrorMessageForField = (field: string) => {
-    const fieldError = errors.find(err => err.field === field);
-    return fieldError ? fieldError.message : '';
   };
 
   return (
     <View style={styles.container}>
-      <View style={styles.inputContainer}>
-        <Icon name="user" size={20} color="gray" style={styles.icon} />
-        <TextInput
-          ref={emailInputRef}
-          style={styles.input}
-          placeholder="Email"
-          value={email}
-          onChangeText={setEmail}
-          keyboardType="email-address"
-          autoCapitalize="none"
-          onSubmitEditing={() => passwordInputRef.current?.focus()}
-        />
-      </View>
-      {getErrorMessageForField('body.email') !== '' && (
-        <Text style={styles.errorText}>
-          {getErrorMessageForField('body.email')}
-        </Text>
-      )}
+      <ControlledInput
+        icon="user"
+        name="email"
+        control={control}
+        ref={emailInputRef}
+        placeholder="Enter your email address"
+        onSubmitEditing={() => passwordInputRef.current?.focus()}
+      />
 
-      <View style={styles.inputContainer}>
-        <Icon name="lock" size={20} color="gray" style={styles.icon} />
-        <TextInput
-          ref={passwordInputRef}
-          style={styles.input}
-          placeholder="Password"
-          value={password}
-          onChangeText={setPassword}
-          secureTextEntry
-          onSubmitEditing={handlePress}
-        />
-      </View>
-      {getErrorMessageForField('body.password') !== '' && (
-        <Text style={styles.errorText}>
-          {getErrorMessageForField('body.password')}
-        </Text>
-      )}
+      <ControlledInput
+        icon="lock"
+        name="password"
+        secureTextEntry
+        control={control}
+        placeholder="password"
+        ref={passwordInputRef}
+        onSubmitEditing={handleSubmit(handlePress)}
+      />
 
-      {getErrorMessageForField('general') !== '' && (
-        <Text style={styles.errorText}>
-          {getErrorMessageForField('general')}
-        </Text>
-      )}
+      {error && <Text style={styles.errorText}>{error}</Text>}
 
-      <CustomButton title="Sign in" onPress={handlePress} />
+      <CustomButton title="Sign in" onPress={handleSubmit(handlePress)} />
 
       <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
         <Text style={styles.linkText}>Don't have an account?</Text>
@@ -136,32 +87,15 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
     paddingHorizontal: 20,
   },
-  inputContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    borderColor: 'gray',
-    borderWidth: 1,
-    borderRadius: 5,
-    marginBottom: 10,
-    backgroundColor: '#fff', // White background for input containers
-  },
-  input: {
-    flex: 1,
-    marginLeft: 10,
-    color: '#000', // Black text color for inputs
-  },
-  icon: {
-    paddingLeft: 20,
+  linkText: {
+    color: 'blue',
+    textAlign: 'center',
+    marginTop: 10,
   },
   errorText: {
     color: 'red',
     textAlign: 'right',
     marginBottom: 10,
-  },
-  linkText: {
-    color: 'blue',
-    textAlign: 'center',
-    marginTop: 10,
   },
 });
 

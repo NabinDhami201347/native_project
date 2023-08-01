@@ -1,13 +1,16 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
+
 import {useAuthContext} from '../contexts/Auth';
 import ProfileCard from '../components/ProfileCard';
 import CustomCard from '../components/CustomCard';
+import CustomButton from '../components/CustomButton';
 
 const ProfileScreen = () => {
-  const {user} = useAuthContext();
-
-  console.log('ser', user);
+  const {removeTokens} = useAuthContext();
+  const handleLogout = () => {
+    removeTokens();
+  };
 
   return (
     <View style={styles.container}>
@@ -30,6 +33,10 @@ const ProfileScreen = () => {
         <CustomCard title="Total Subjects" icon="calendar" content="24" />
         <CustomCard title="Subject Passed" icon="book" content="24" />
       </View>
+
+      <View style={{flexDirection: 'row'}}>
+        <CustomButton title="Logout" onPress={handleLogout} />
+      </View>
     </View>
   );
 };
@@ -40,5 +47,6 @@ const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 10,
     paddingVertical: 20,
+    backgroundColor: 'gray',
   },
 });
