@@ -7,32 +7,25 @@ import {
   TextInput,
 } from 'react-native';
 import {useForm} from 'react-hook-form';
-import {z, ZodType} from 'zod';
 import {zodResolver} from '@hookform/resolvers/zod';
 
 import CustomButton from '../../components/CustomButton';
 import ControlledInput from '../../components/ControlledInput';
 import {publicInstance} from '../../api';
 import {useAuthContext} from '../../contexts/Auth';
-
-const UserSchema = z.object({
-  email: z.string().email('Invalid email address:'),
-  password: z.string().min(8, 'Password must be at least 8 characters long'),
-});
-
-type UserType = ZodType<typeof UserSchema>;
+import {LoginInput, loginUserSchema} from '../../schema/login';
 
 const Login = ({navigation}: any) => {
   const [error, setError] = useState('');
-  const {control, handleSubmit} = useForm<UserType>({
-    resolver: zodResolver(UserSchema),
+  const {control, handleSubmit} = useForm<LoginInput>({
+    resolver: zodResolver(loginUserSchema),
   });
   const {setTokens} = useAuthContext();
 
   const emailInputRef = useRef<TextInput | null>(null);
   const passwordInputRef = useRef<TextInput | null>(null);
 
-  const handlePress = async (user: UserType) => {
+  const handlePress = async (user: LoginInput) => {
     try {
       const {data} = await publicInstance.post('/auth/login', user);
 
@@ -46,11 +39,11 @@ const Login = ({navigation}: any) => {
   return (
     <View style={styles.container}>
       <ControlledInput
-        icon="user"
+        icon="envelope"
         name="email"
         control={control}
         ref={emailInputRef}
-        placeholder="Enter your email address"
+        placeholder="email"
         onSubmitEditing={() => passwordInputRef.current?.focus()}
       />
 

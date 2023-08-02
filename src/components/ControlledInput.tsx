@@ -5,7 +5,8 @@ import {Control, Controller} from 'react-hook-form';
 import {Text} from 'react-native-paper';
 
 type ControlledInputProps = {
-  control: Control;
+  // control: Control;
+  control: any;
   name: string;
   icon: string;
 } & React.ComponentProps<typeof TextInput>;
@@ -49,13 +50,13 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 5,
     marginBottom: 10,
-    backgroundColor: '#fff', // White background for input containers
+    backgroundColor: '#fff',
   },
   input: {
     flex: 1,
     marginLeft: 10,
     paddingVertical: 15,
-    color: '#000', // Black text color for inputs
+    color: '#000',
   },
   icon: {
     paddingLeft: 20,

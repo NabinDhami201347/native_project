@@ -87,6 +87,7 @@ const AuthContext = createContext<AuthContextValue | null>(initialState);
 export const AuthProvider = ({children}: {children: ReactNode}) => {
   const [state, dispatch] = useReducer(authReducer, initialState);
   const [loading, setLoading] = useState(true);
+  // console.log(state);
 
   useEffect(() => {
     const bootstrapAsync = async () => {
@@ -106,6 +107,7 @@ export const AuthProvider = ({children}: {children: ReactNode}) => {
         if (userAccessToken && userRefreshToken) {
           // If access_token exists, make the API request
           const {data} = await protectedInstance.get('auth/profile');
+
           dispatch({type: ActionTypes.SetUser, payload: data});
         }
 

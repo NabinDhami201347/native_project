@@ -3,157 +3,79 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  View,
   TextInput,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
 
 import React, {useRef, useState} from 'react';
 import {publicInstance} from '../../api';
 import CustomButton from '../../components/CustomButton';
-
-interface Error {
-  field: string;
-  message: string;
-}
+import ControlledInput from '../../components/ControlledInput';
+import {zodResolver} from '@hookform/resolvers/zod';
+import {RegisterInput, registerUserSchema} from '../../schema/register';
+import {useForm} from 'react-hook-form';
 
 const Signup = ({navigation}: any) => {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [passwordConfirmation, setPasswordConfirmation] = useState('');
-  const [errors, setErrors] = useState<Error[]>([]);
+  const [error, setError] = useState('');
+  const {control, handleSubmit} = useForm<RegisterInput>({
+    resolver: zodResolver(registerUserSchema),
+  });
 
+  const nameInputRef = useRef<TextInput | null>(null);
   const emailInputRef = useRef<TextInput | null>(null);
   const passwordInputRef = useRef<TextInput | null>(null);
   const passwordConfirmationInputRef = useRef<TextInput | null>(null);
 
-  const handlePress = async () => {
+  const handlePress = async (data: RegisterInput) => {
     try {
-      setErrors([]); // Clear any previous errors
-      await publicInstance.post('/auth/register', {
-        name,
-        email,
-        password,
-        passwordConfirmation,
-      });
+      await publicInstance.post('/auth/register', data);
       navigation.navigate('SignIn');
     } catch (error: any) {
-      if (error.response && error.response.data) {
-        if (error.response.data.errors) {
-          const responseErrors: Error[] = error.response.data.errors;
-          setErrors(responseErrors); // Set the errors array with specific field errors
-        } else if (error.response.data.error) {
-          setErrors([
-            {
-              field: 'general',
-              message: error.response.data.error,
-            },
-          ]); // Set the error message with the key "error"
-        } else {
-          setErrors([
-            {
-              field: 'general',
-              message: 'An error occurred. Please try again.',
-            },
-          ]); // Fallback error message
-        }
-      } else {
-        setErrors([
-          {
-            field: 'general',
-            message: 'An error occurred. Please try again.',
-          },
-        ]); // Fallback error message
-      }
+      setError(error.response.data.error);
+      console.error(error.response.data.error);
     }
   };
 
-  const getErrorMessageForField = (field: string) => {
-    const fieldError = errors.find(err => err.field === field);
-    return fieldError ? fieldError.message : '';
-  };
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <View style={styles.inputContainer}>
-        <Icon name="user" size={20} color="gray" style={styles.icon} />
-        <TextInput
-          style={styles.input}
-          placeholder="Name"
-          value={name}
-          onChangeText={setName}
-          onSubmitEditing={() => emailInputRef.current?.focus()}
-          autoCapitalize="words"
-        />
-      </View>
-      {getErrorMessageForField('body.name') !== '' && (
-        <Text style={styles.errorText}>
-          {getErrorMessageForField('body.name')}
-        </Text>
-      )}
+      <ControlledInput
+        icon="user"
+        name="name"
+        control={control}
+        ref={nameInputRef}
+        placeholder="email"
+        onSubmitEditing={() => emailInputRef.current?.focus()}
+      />
+      <ControlledInput
+        icon="envelope"
+        name="email"
+        control={control}
+        ref={emailInputRef}
+        placeholder="email"
+        onSubmitEditing={() => passwordInputRef.current?.focus()}
+      />
 
-      <View style={styles.inputContainer}>
-        <Icon name="envelope" size={20} color="gray" style={styles.icon} />
-        <TextInput
-          ref={emailInputRef}
-          style={styles.input}
-          placeholder="Email"
-          value={email}
-          onChangeText={setEmail}
-          onSubmitEditing={() => passwordInputRef.current?.focus()}
-          keyboardType="email-address"
-          autoCapitalize="none"
-        />
-      </View>
-      {getErrorMessageForField('body.email') !== '' && (
-        <Text style={styles.errorText}>
-          {getErrorMessageForField('body.email')}
-        </Text>
-      )}
+      <ControlledInput
+        icon="lock"
+        name="password"
+        secureTextEntry
+        control={control}
+        placeholder="password"
+        ref={passwordInputRef}
+        onSubmitEditing={() => passwordConfirmationInputRef.current?.focus()}
+      />
+      <ControlledInput
+        icon="lock"
+        name="passwordConfirmation"
+        secureTextEntry
+        control={control}
+        placeholder="confirm password"
+        ref={passwordConfirmationInputRef}
+        onSubmitEditing={handleSubmit(handlePress)}
+      />
 
-      <View style={styles.inputContainer}>
-        <Icon name="lock" size={20} color="gray" style={styles.icon} />
-        <TextInput
-          ref={passwordInputRef}
-          style={styles.input}
-          placeholder="Password"
-          value={password}
-          onChangeText={setPassword}
-          secureTextEntry
-          onSubmitEditing={() => passwordConfirmationInputRef.current?.focus()}
-        />
-      </View>
-      {getErrorMessageForField('body.password') !== '' && (
-        <Text style={styles.errorText}>
-          {getErrorMessageForField('body.password')}
-        </Text>
-      )}
+      {error && <Text style={styles.errorText}>{error}</Text>}
 
-      <View style={styles.inputContainer}>
-        <Icon name="lock" size={20} color="gray" style={styles.icon} />
-        <TextInput
-          ref={passwordConfirmationInputRef}
-          style={styles.input}
-          placeholder="Password Confirmation"
-          value={passwordConfirmation}
-          onChangeText={setPasswordConfirmation}
-          secureTextEntry
-          onSubmitEditing={handlePress}
-        />
-      </View>
-      {getErrorMessageForField('body.passwordConfirmation') !== '' && (
-        <Text style={styles.errorText}>
-          {getErrorMessageForField('body.passwordConfirmation')}
-        </Text>
-      )}
-
-      {getErrorMessageForField('general') !== '' && (
-        <Text style={styles.errorText}>
-          {getErrorMessageForField('general')}
-        </Text>
-      )}
-
-      <CustomButton title="Sign up" onPress={handlePress} />
+      <CustomButton title="Sign up" onPress={handleSubmit(handlePress)} />
       <TouchableOpacity onPress={() => navigation.navigate('SignIn')}>
         <Text style={styles.linkText}>Already have an account? Sign in</Text>
       </TouchableOpacity>
@@ -167,8 +89,8 @@ const Signup = ({navigation}: any) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f0f0f0', // Light gray background color
-    justifyContent: 'center', // Center contents vertically
+    backgroundColor: '#f0f0f0',
+    justifyContent: 'center',
     paddingVertical: 20,
     paddingHorizontal: 20,
   },
@@ -179,12 +101,12 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 5,
     marginBottom: 10,
-    backgroundColor: '#fff', // White background for input containers
+    backgroundColor: '#fff',
   },
   input: {
     flex: 1,
     marginLeft: 10,
-    color: '#000', // Black text color for inputs
+    color: '#000',
   },
   icon: {
     paddingLeft: 20,
@@ -201,7 +123,7 @@ const styles = StyleSheet.create({
   },
   note: {
     textAlign: 'center',
-    color: '#888', // Gray text color for note
+    color: '#888',
   },
 });
 
