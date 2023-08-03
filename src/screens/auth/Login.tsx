@@ -75,8 +75,8 @@ const Login = ({navigation}: any) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f0f0f0', // Light gray background color
-    justifyContent: 'center', // Center contents vertically
+    backgroundColor: '#f0f0f0',
+    justifyContent: 'center',
     paddingVertical: 20,
     paddingHorizontal: 20,
   },

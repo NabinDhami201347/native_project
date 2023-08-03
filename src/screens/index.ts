@@ -12,8 +12,8 @@ import Notices from './notice/Notices';
 import University from './notice/University';
 import Notice from './notice/Notice';
 
-import Posts from './community/Posts';
-import Post from './community/Post';
+import Community from './community/Community';
+import Post from './community/CommunityPost';
 
 import Library from './library/Library';
 import Book from './library/Book';
@@ -30,7 +30,7 @@ export {
   College,
   Department,
   Notice,
-  Posts,
+  Community,
   Post,
   Library,
   Book,

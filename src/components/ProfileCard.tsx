@@ -4,7 +4,6 @@ import {
   launchImageLibrary,
   ImagePickerResponse,
 } from 'react-native-image-picker';
-
 import {
   Image,
   StyleSheet,
@@ -12,8 +11,8 @@ import {
   TouchableOpacity,
   View,
   Button,
+  ActivityIndicator,
 } from 'react-native';
-
 import mime from 'mime';
 import {useAuthContext} from '../contexts/Auth';
 import {imageuri, protectedInstance} from '../api';
@@ -22,10 +21,17 @@ const ProfileCard = () => {
   const [selectedImage, setSelectedImage] =
     useState<ImagePickerResponse | null>(null);
   const {user, updateUser} = useAuthContext();
+  const [uploading, setUploading] = useState(false);
 
   const pickImage = () => {
+    console.log('object');
     launchImageLibrary(
-      {mediaType: 'photo', includeBase64: false, maxHeight: 120, maxWidth: 120},
+      {
+        mediaType: 'photo',
+        includeBase64: false,
+        maxHeight: 800, // Adjust the maximum height as needed
+        maxWidth: 800, // Adjust the maximum width as needed
+      },
       (response: ImagePickerResponse) => {
         if (
           !response.didCancel &&
@@ -40,6 +46,7 @@ const ProfileCard = () => {
   };
 
   const uploadImage = async () => {
+    console.log('uploading');
     if (!selectedImage) {
       return;
     }
@@ -64,6 +71,8 @@ const ProfileCard = () => {
     });
 
     try {
+      setUploading(true); // Show loading indicator during upload
+
       const response = await protectedInstance.post('/auth/profile', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
@@ -77,6 +86,9 @@ const ProfileCard = () => {
       }
     } catch (error) {
       console.log('Upload failed:', error);
+    } finally {
+      setUploading(false); // Hide loading indicator after upload completion
+      setSelectedImage(null);
     }
   };
 
@@ -102,7 +114,9 @@ const ProfileCard = () => {
         </View>
       </View>
 
-      {selectedImage ? (
+      {uploading ? (
+        <ActivityIndicator size="large" color="gray" />
+      ) : selectedImage ? (
         <Button title="Save" onPress={uploadImage} />
       ) : (
         <View style={styles.infoContainer}>
