@@ -1,62 +1,68 @@
-import React from 'react';
-import {View, FlatList, StyleSheet} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {View, FlatList, StyleSheet, ActivityIndicator} from 'react-native';
 import Post from '../../components/community/Post';
+import {protectedInstance} from '../../api';
 
-const posts = [
-  {
-    id: '1',
-    title: 'Game Development',
-    description:
-      'Game development is the process of creating interactive electronic games. It involves designing, developing, and programming games for various platforms such as consoles, computers, mobile devices, and more.',
-    author: 'Randy Orton',
-    date: 'July 17, 2023',
-  },
-  {
-    id: '2',
-    title: 'Machine Learning',
-    description:
-      'Machine Learning (ML) is a subset of artificial intelligence (AI) that focuses on developing algorithms and models that enable computers to learn and make predictions or decisions without being explicitly programmed.',
-    author: 'John Cena',
-    date: 'July 18, 2023',
-  },
-  {
-    id: '3',
-    title: 'Blockchain Development',
-    description:
-      'As data availability and computational power continue to increase, machine learning is expected to play an increasingly significant role in solving complex problems and driving advancements in various fields.',
-    author: 'Roman Reigns',
-    date: 'July 19, 2023',
-  },
-  {
-    id: '4',
-    title: 'Data Science',
-    description: 'Data Science bootcamp is hapeing this saturday',
-    author: 'Nabin Dhami',
-    date: 'August 1, 2025',
-    image:
-      'https://th.bing.com/th/id/R.2b7d505bd3e7b290420bf537056685ec?rik=V7bN%2bB5lzbOUOA&pid=ImgRaw&r=0',
-  },
-];
+interface IPost {
+  id: number;
+  title: string;
+  description: string;
+  image: string;
+  createdAt: string;
+  updatedAt: string;
+  studentId: number;
+  student: {
+    name: string;
+    profile: {
+      photo: string;
+    };
+  };
+}
 
 const Community = () => {
-  // @ts-ignore
-  const renderPost = ({item}) => (
-    <Post
-      title={item.title}
-      description={item.description}
-      author={item.author}
-      date={item.date}
-      image={item.image}
-    />
-  );
+  const [loading, setLoading] = useState(true);
+  const [posts, setPosts] = useState<IPost[]>([]);
+
+  const fetchPosts = async () => {
+    try {
+      const response = await protectedInstance.get('/posts');
+      setPosts(response.data);
+      setLoading(false);
+    } catch (error: any) {
+      console.error(
+        'Error fetching posts:',
+        error.response?.data?.error || error.message,
+      );
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchPosts();
+  }, []);
+
+  if (loading) {
+    return (
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator size="large" color="blue" />
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container}>
       <FlatList
         showsVerticalScrollIndicator={false}
         data={posts}
-        keyExtractor={item => item.id}
-        renderItem={renderPost}
+        renderItem={({item}) => (
+          <Post
+            title={item.title}
+            description={item.description}
+            author={item.student.name}
+            date={item.createdAt}
+            image={item.image}
+          />
+        )}
         contentContainerStyle={styles.postList}
       />
     </View>
@@ -71,6 +77,11 @@ const styles = StyleSheet.create({
   postList: {
     paddingVertical: 16,
     paddingHorizontal: 16,
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 

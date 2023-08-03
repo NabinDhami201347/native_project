@@ -1,6 +1,8 @@
 import React, {useState} from 'react';
 import {View, Text, Image, TouchableOpacity, StyleSheet} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import {imageuri} from '../../api';
+import {formatDate} from '../../utils/date';
 
 interface PostCardProps {
   title: string;
@@ -29,12 +31,14 @@ const PostCard: React.FC<PostCardProps> = ({
 
   return (
     <View style={styles.container}>
-      {image && <Image source={{uri: image}} style={styles.image} />}
+      {image && (
+        <Image source={{uri: `${imageuri}/${image}`}} style={styles.image} />
+      )}
       <View style={styles.postCardHeader}>
         <Text style={styles.title}>{title}</Text>
         <Text style={styles.description}>{description}</Text>
         <Text style={styles.authorDate}>
-          {author} - {date}
+          {author} - {formatDate(date)}
         </Text>
       </View>
       <View style={styles.reactionsContainer}>

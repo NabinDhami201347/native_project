@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {View, Text, Image, TouchableOpacity, StyleSheet} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import {imageuri} from '../../api';
 
 interface PostProps {
   title: string;
@@ -46,7 +47,9 @@ const Post: React.FC<PostProps> = ({
 
   return (
     <TouchableOpacity onPress={onPress} style={styles.container}>
-      {image && <Image source={{uri: image}} style={styles.image} />}
+      {image && (
+        <Image source={{uri: `${imageuri}/${image}`}} style={styles.image} />
+      )}
       <View style={styles.postHeader}>
         <Text style={styles.title}>{title}</Text>
         <Text style={styles.description}>{description}</Text>
