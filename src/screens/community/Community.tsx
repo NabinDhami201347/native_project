@@ -61,6 +61,7 @@ const Community = () => {
             author={item.student.name}
             date={item.createdAt}
             image={item.image}
+            profileImage={item.student.profile.photo}
           />
         )}
         contentContainerStyle={styles.postList}

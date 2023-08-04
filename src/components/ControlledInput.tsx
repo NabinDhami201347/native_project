@@ -23,7 +23,7 @@ const ControlledInput = (
   }: ControlledInputProps,
   ref: Ref<TextInput>,
 ) => {
-  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword, setShowPassword] = useState(true);
 
   return (
     <Controller

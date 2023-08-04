@@ -1,107 +1,71 @@
 import {StyleSheet, Text, TextInput, View} from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import React, {useState} from 'react';
+import {zodResolver} from '@hookform/resolvers/zod';
+import React, {useRef, useState} from 'react';
+import {useForm} from 'react-hook-form';
 
 import {publicInstance} from '../../api';
 import CustomButton from '../../components/CustomButton';
+import ControlledInput from '../../components/ControlledInput';
 
-interface Error {
-  field: string;
-  message: string;
-}
+import {ForgotInput, forgotUserSchema} from '../../schema/forgot';
 
 const Forgot = ({navigation}: any) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [passwordConfirmation, setPasswordConfirmation] = useState('');
-  const [errors, setErrors] = useState<Error[]>([]);
+  const [error, setError] = useState('');
+  const {control, handleSubmit} = useForm<ForgotInput>({
+    resolver: zodResolver(forgotUserSchema),
+  });
+  const emailInputRef = useRef<TextInput | null>(null);
+  const passwordInputRef = useRef<TextInput | null>(null);
+  const passwordConfirmationInputRef = useRef<TextInput | null>(null);
 
-  const handlePress = async () => {
+  const handlePress = async (data: ForgotInput) => {
     try {
-      setErrors([]); // Clear any previous errors
-      await publicInstance.put('/auth/forgot', {
-        email,
-        password,
-        passwordConfirmation,
-      });
+      await publicInstance.post('/auth/forgot', data);
       navigation.navigate('SignIn');
     } catch (error: any) {
-      if (error.response && error.response.data && error.response.data.errors) {
-        const responseErrors: Error[] = error.response.data.errors;
-        setErrors(responseErrors); // Set the errors array with specific field errors
-      } else {
-        setErrors([
-          {
-            field: 'general',
-            message: 'An error occurred. Please try again.',
-          },
-        ]); // Fallback error message
-      }
+      setError(error.response.data.error);
+      console.error(error.response.data.error);
     }
   };
 
-  const getErrorMessageForField = (field: string) => {
-    const fieldError = errors.find(err => err.field === field);
-    return fieldError ? fieldError.message : '';
-  };
   return (
     <View style={styles.container}>
-      <View style={styles.inputContainer}>
-        <Icon name="user" size={20} color="gray" style={styles.icon} />
-        <TextInput
-          style={styles.input}
-          placeholder="Email"
-          value={email}
-          onChangeText={setEmail}
-          keyboardType="email-address"
-          autoCapitalize="none"
-        />
-      </View>
-      {getErrorMessageForField('body.email') !== '' && (
-        <Text style={styles.errorText}>
-          {getErrorMessageForField('body.email')}
-        </Text>
-      )}
+      <ControlledInput
+        icon="envelope"
+        name="email"
+        control={control}
+        ref={emailInputRef}
+        placeholder="email"
+        onSubmitEditing={() => passwordInputRef.current?.focus()}
+      />
 
-      <View style={styles.inputContainer}>
-        <Icon name="lock" size={20} color="gray" style={styles.icon} />
-        <TextInput
-          style={styles.input}
-          placeholder="Password"
-          value={password}
-          onChangeText={setPassword}
-          secureTextEntry
-        />
-      </View>
-      {getErrorMessageForField('body.password') !== '' && (
-        <Text style={styles.errorText}>
-          {getErrorMessageForField('body.password')}
-        </Text>
-      )}
+      <ControlledInput
+        password
+        icon="lock"
+        name="password"
+        secureTextEntry
+        control={control}
+        placeholder="password"
+        ref={passwordInputRef}
+        onSubmitEditing={() => passwordConfirmationInputRef.current?.focus()}
+      />
+      <ControlledInput
+        password
+        icon="lock"
+        name="passwordConfirmation"
+        secureTextEntry
+        control={control}
+        placeholder="confirm password"
+        ref={passwordConfirmationInputRef}
+        onSubmitEditing={handleSubmit(handlePress)}
+      />
 
-      <View style={styles.inputContainer}>
-        <Icon name="lock" size={20} color="gray" style={styles.icon} />
-        <TextInput
-          style={styles.input}
-          placeholder="Confirm Password"
-          value={passwordConfirmation}
-          onChangeText={setPasswordConfirmation}
-          secureTextEntry
-        />
-      </View>
-      {getErrorMessageForField('body.passwordConfirmation') !== '' && (
-        <Text style={styles.errorText}>
-          {getErrorMessageForField('body.passwordConfirmation')}
-        </Text>
-      )}
+      {error && <Text style={styles.errorText}>{error}</Text>}
 
-      {getErrorMessageForField('general') !== '' && (
-        <Text style={styles.errorText}>
-          {getErrorMessageForField('general')}
-        </Text>
-      )}
-
-      <CustomButton title="Change Password" onPress={handlePress} />
+      <CustomButton
+        title="Change Password"
+        onPress={handleSubmit(handlePress)}
+      />
     </View>
   );
 };
@@ -109,32 +73,27 @@ const Forgot = ({navigation}: any) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f0f0f0', // Light gray background color
-    justifyContent: 'center', // Center contents vertically
+    backgroundColor: '#090C13',
+    justifyContent: 'center',
     paddingVertical: 20,
     paddingHorizontal: 20,
-  },
-  inputContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    borderColor: 'gray',
-    borderWidth: 1,
-    borderRadius: 5,
-    marginBottom: 10,
-    backgroundColor: '#fff', // White background for input containers
-  },
-  input: {
-    flex: 1,
-    marginLeft: 10,
-    color: '#000', // Black text color for inputs
-  },
-  icon: {
-    paddingLeft: 20,
   },
   errorText: {
     color: 'red',
     textAlign: 'right',
     marginBottom: 10,
+  },
+  linkText: {
+    color: '#B508F1',
+    marginHorizontal: 10,
+    fontSize: 16,
+    textDecorationLine: 'underline',
+    textAlign: 'center',
+    fontWeight: '600',
+  },
+  note: {
+    textAlign: 'center',
+    color: '#888',
   },
 });
 

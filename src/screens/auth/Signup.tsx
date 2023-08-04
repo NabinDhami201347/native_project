@@ -4,6 +4,7 @@ import {
   Text,
   TouchableOpacity,
   TextInput,
+  View,
 } from 'react-native';
 
 import React, {useRef, useState} from 'react';
@@ -42,7 +43,7 @@ const Signup = ({navigation}: any) => {
         name="name"
         control={control}
         ref={nameInputRef}
-        placeholder="email"
+        placeholder="name"
         onSubmitEditing={() => emailInputRef.current?.focus()}
       />
       <ControlledInput
@@ -55,6 +56,7 @@ const Signup = ({navigation}: any) => {
       />
 
       <ControlledInput
+        password
         icon="lock"
         name="password"
         secureTextEntry
@@ -64,6 +66,7 @@ const Signup = ({navigation}: any) => {
         onSubmitEditing={() => passwordConfirmationInputRef.current?.focus()}
       />
       <ControlledInput
+        password
         icon="lock"
         name="passwordConfirmation"
         secureTextEntry
@@ -76,9 +79,23 @@ const Signup = ({navigation}: any) => {
       {error && <Text style={styles.errorText}>{error}</Text>}
 
       <CustomButton title="Sign up" onPress={handleSubmit(handlePress)} />
-      <TouchableOpacity onPress={() => navigation.navigate('SignIn')}>
-        <Text style={styles.linkText}>Already have an account? Sign in</Text>
-      </TouchableOpacity>
+
+      <View
+        style={{
+          flexDirection: 'row',
+          width: '100%',
+          justifyContent: 'center',
+          alignItems: 'center',
+          marginTop: 10,
+        }}>
+        <View>
+          <Text style={styles.note}>Already have an account?</Text>
+        </View>
+        <TouchableOpacity onPress={() => navigation.navigate('SignIn')}>
+          <Text style={styles.linkText}>Sign In</Text>
+        </TouchableOpacity>
+      </View>
+
       <Text style={styles.note}>
         By signing up, you agree to our Terms of Service and Privacy Policy.
       </Text>
@@ -89,27 +106,10 @@ const Signup = ({navigation}: any) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f0f0f0',
+    backgroundColor: '#090C13',
     justifyContent: 'center',
     paddingVertical: 20,
     paddingHorizontal: 20,
-  },
-  inputContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    borderColor: 'gray',
-    borderWidth: 1,
-    borderRadius: 5,
-    marginBottom: 10,
-    backgroundColor: '#fff',
-  },
-  input: {
-    flex: 1,
-    marginLeft: 10,
-    color: '#000',
-  },
-  icon: {
-    paddingLeft: 20,
   },
   errorText: {
     color: 'red',
@@ -117,9 +117,12 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   linkText: {
-    color: 'blue',
+    color: '#B508F1',
+    marginHorizontal: 10,
+    fontSize: 16,
+    textDecorationLine: 'underline',
     textAlign: 'center',
-    marginBottom: 10,
+    fontWeight: '600',
   },
   note: {
     textAlign: 'center',

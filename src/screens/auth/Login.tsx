@@ -11,14 +11,14 @@ import {zodResolver} from '@hookform/resolvers/zod';
 
 import CustomButton from '../../components/CustomButton';
 import ControlledInput from '../../components/ControlledInput';
+
 import {publicInstance} from '../../api';
 import {useAuthContext} from '../../contexts/Auth';
-import {LoginInput, loginUserSchema} from '../../schema/login';
 import LoginImage from '../../assets/svgs/LoginImage';
+import {LoginInput, loginUserSchema} from '../../schema/login';
 
 const Login = ({navigation}: any) => {
   const [error, setError] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
   const {control, handleSubmit} = useForm<LoginInput>({
     resolver: zodResolver(loginUserSchema),
   });
@@ -29,8 +29,10 @@ const Login = ({navigation}: any) => {
 
   const handlePress = async (user: LoginInput) => {
     try {
+      console.log(user);
       const {data} = await publicInstance.post('/auth/login', user);
 
+      console.log(data, 'data');
       setTokens(data.access_token, data.refresh_token);
     } catch (error: any) {
       setError(error.response.data.error);
@@ -77,27 +79,22 @@ const Login = ({navigation}: any) => {
 
       <View
         style={{
-          flexDirection: 'column',
-          paddingLeft: 80,
-          marginVertical: 10,
-          gap: 5,
+          flexDirection: 'row',
+          width: '100%',
+          justifyContent: 'center',
+          marginTop: 10,
         }}>
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            gap: 10,
-          }}>
-          <Text style={{color: 'white'}}>Don't have an account ?</Text>
-          <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
-            <Text style={styles.linkText}>Sign Up</Text>
-          </TouchableOpacity>
+        <View>
+          <Text style={styles.note}>Don't have an account?</Text>
         </View>
-
-        <TouchableOpacity onPress={() => navigation.navigate('ForgotPassword')}>
-          <Text style={styles.linkText}>Forgot Password</Text>
+        <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
+          <Text style={styles.linkText}>Sign Up</Text>
         </TouchableOpacity>
       </View>
+
+      <TouchableOpacity onPress={() => navigation.navigate('ForgotPassword')}>
+        <Text style={styles.linkText}>Forgot Password?</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -110,15 +107,22 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
     paddingHorizontal: 20,
   },
-  linkText: {
-    color: '#B508F1',
-    fontSize: 16,
-    textDecorationLine: 'underline',
-  },
   errorText: {
     color: 'red',
     textAlign: 'right',
     marginBottom: 10,
+  },
+  linkText: {
+    color: '#B508F1',
+    marginHorizontal: 10,
+    fontSize: 16,
+    textDecorationLine: 'underline',
+    textAlign: 'center',
+    fontWeight: '600',
+  },
+  note: {
+    textAlign: 'center',
+    color: '#888',
   },
 });
 

@@ -12,15 +12,6 @@ interface CommentItemProps {
 }
 
 const CommentItem: React.FC<CommentItemProps> = ({comment}) => {
-  const [liked, setLiked] = useState(false);
-  const handleLikePress = () => {
-    setLiked(liked => !liked);
-  };
-
-  const handleReplyPress = () => {
-    // Handle reply press logic
-  };
-
   return (
     <View style={styles.commentContainer}>
       <View style={styles.userContainer}>

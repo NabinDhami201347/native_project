@@ -10,6 +10,7 @@ interface PostProps {
   author: string;
   date: string;
   image?: string;
+  profileImage?: string;
 }
 
 const Post: React.FC<PostProps> = ({
@@ -40,9 +41,12 @@ const Post: React.FC<PostProps> = ({
       <View style={styles.postHeader}>
         <Text style={styles.title}>{title}</Text>
         <Text style={styles.description}>{description}</Text>
-        <Text style={styles.authorDate}>
-          {author} - {formatDate(date)}
-        </Text>
+
+        <View style={{flexDirection: 'row', alignItems: 'center', gap: 10}}>
+          <Image source={{uri: `${imageuri}/${image}`}} style={styles.avatar} />
+          <Text style={styles.authorDate}>{author}</Text>
+          <Text style={styles.authorDate}>{formatDate(date)}</Text>
+        </View>
       </View>
     </TouchableOpacity>
   );
@@ -52,7 +56,6 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: '#212121',
     color: '#ffffff',
-    padding: 10,
     marginBottom: 16,
     borderRadius: 8,
   },
@@ -63,6 +66,7 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
   postHeader: {
+    padding: 10,
     marginBottom: 12,
     color: '#ffffff',
   },
@@ -81,17 +85,11 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: '#888888',
   },
-  reactionsContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  reactionButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  reactionText: {
-    marginLeft: 4,
-    color: 'blue',
+  avatar: {
+    width: 24,
+    height: 24,
+    borderRadius: 12,
+    marginRight: 8,
   },
 });
 
