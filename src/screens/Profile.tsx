@@ -45,7 +45,9 @@ export default ProfileScreen;
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: 10,
+    flex: 1,
+    paddingHorizontal: 20,
     paddingVertical: 20,
+    backgroundColor: '#090C13',
   },
 });

@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {View, FlatList, StyleSheet, ActivityIndicator} from 'react-native';
+
 import Post from '../../components/community/Post';
 import {protectedInstance} from '../../api';
 
@@ -73,6 +74,7 @@ const Community = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    paddingVertical: 20,
     backgroundColor: '#090c13',
   },
   postList: {

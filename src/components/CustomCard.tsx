@@ -11,7 +11,7 @@ interface CustomCardProps {
 const CustomCard: React.FC<CustomCardProps> = ({title, icon, content}) => {
   return (
     <View style={styles.card}>
-      <Icon name={icon} size={24} color="gray" />
+      <Icon name={icon} size={24} color="white" />
       <View style={styles.cardContent}>
         <Text style={styles.cardTitle}>{title}</Text>
         <Text style={styles.cardText}>{content}</Text>
@@ -24,7 +24,7 @@ export default CustomCard;
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: 'white',
+    backgroundColor: '#212121',
     borderRadius: 8,
     padding: 16,
     flexDirection: 'row',
@@ -40,8 +40,10 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     marginBottom: 4,
+    color: 'white',
   },
   cardText: {
     fontSize: 16,
+    color: 'white',
   },
 });

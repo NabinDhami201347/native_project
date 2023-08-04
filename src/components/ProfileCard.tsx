@@ -160,7 +160,8 @@ const styles = StyleSheet.create({
   name: {
     fontSize: 24,
     fontWeight: 'bold',
-    marginBottom: 8,
+    marginVertical: 8,
+    color: 'white',
   },
   email: {
     fontSize: 14,

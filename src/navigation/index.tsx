@@ -85,7 +85,11 @@ export default function Routes() {
           />
           <Stack.Screen name="Profile" component={Profile} />
           <Stack.Screen name="Notice" component={Notice} />
-          <Stack.Screen name="CommunityPost" component={CommunityPost} />
+          <Stack.Screen
+            name="CommunityPost"
+            component={CommunityPost}
+            options={{headerShown: false}}
+          />
         </Stack.Navigator>
       ) : (
         <PublicStack />

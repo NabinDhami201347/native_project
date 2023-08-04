@@ -1,6 +1,5 @@
-import React, {useState} from 'react';
-import {View, Text, Image, TouchableOpacity, StyleSheet} from 'react-native';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import React from 'react';
+import {View, Text, Image, StyleSheet} from 'react-native';
 import {imageuri} from '../../api';
 import {formatDate} from '../../utils/date';
 
@@ -40,7 +39,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#090c13',
     paddingTop: 20,
     borderRadius: 8,
-    paddingHorizontal: 10,
+    paddingHorizontal: 20,
   },
   image: {
     width: '100%',
