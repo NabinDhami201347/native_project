@@ -6,40 +6,19 @@ import {NavigationContainer} from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import {Text} from 'react-native';
 import {useAuthContext} from '../contexts/Auth';
-import ProfileIcon from '../components/ProfileIcon';
-import {Community, Notice, Notices, Profile} from '../screens';
+import {
+  Community,
+  Forgot,
+  Home,
+  Library,
+  Login,
+  Notice,
+  Notices,
+  Profile,
+  Signup,
+} from '../screens';
 import CommunityPost from '../screens/community/CommunityPost';
-
-// Dummy Home screen
-const Home = () => {
-  return <Text>Hello from Home Screen</Text>;
-};
-
-// Dummy Login screen
-const Login = () => {
-  return <Text>Hello from Login Screen</Text>;
-};
-
-// Dummy Signup screen
-const Signup = () => {
-  return <Text>Hello from Signup Screen</Text>;
-};
-
-// Dummy Posts screen
-const Posts = () => {
-  return <Text>Hello from Posts Screen</Text>;
-};
-
-// Dummy Library screen
-const Library = () => {
-  return <Text>Hello from Library Screen</Text>;
-};
-
-const Forgot = () => {
-  return <Text>Forgot Icon</Text>;
-};
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -59,8 +38,8 @@ const PrivateStack = () => {
     <Tab.Navigator
       initialRouteName="Home"
       screenOptions={({route}) => ({
-        headerRight: () => <ProfileIcon />,
-        tabBarActiveTintColor: 'red',
+        tabBarActiveTintColor: 'black',
+        headerShown: false,
         tabBarIcon: ({color, size, focused}) => {
           let iconName = '';
           let IconComponent = null;
@@ -94,6 +73,7 @@ const PrivateStack = () => {
 
 export default function Routes() {
   const {access_token} = useAuthContext();
+
   return (
     <NavigationContainer>
       {access_token ? (
@@ -101,7 +81,7 @@ export default function Routes() {
           <Stack.Screen
             name="HomeScreen"
             component={PrivateStack}
-            options={{headerShown: false}}
+            options={{headerShown: false}} // Bottom Tabs
           />
           <Stack.Screen name="Profile" component={Profile} />
           <Stack.Screen name="Notice" component={Notice} />

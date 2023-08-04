@@ -10,7 +10,7 @@ type CustomButtonProps = {
 const CustomButton: React.FC<CustomButtonProps> = ({
   onPress,
   title,
-  backgroundColor = '#4942E4',
+  backgroundColor = '#B508F1',
 }) => {
   return (
     <TouchableOpacity

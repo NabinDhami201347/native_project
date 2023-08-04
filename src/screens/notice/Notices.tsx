@@ -6,7 +6,6 @@ import {
   StyleSheet,
   ActivityIndicator,
   TouchableOpacity,
-  ViewStyle,
 } from 'react-native';
 import {protectedInstance} from '../../api';
 import NoticeCard from '../../components/NoticeCard';
@@ -23,7 +22,7 @@ export interface INotice {
 const Notices = () => {
   const [loading, setLoading] = useState(true);
   const [notices, setNotices] = useState<INotice[]>([]);
-  const [selectedTag, setSelectedTag] = useState<string | undefined>(undefined);
+  const [selectedTag, setSelectedTag] = useState<string>('All');
 
   const fetchNotices = async () => {
     try {
@@ -44,9 +43,9 @@ const Notices = () => {
   }, []);
 
   const filterNoticesByTag = useMemo(() => {
-    return selectedTag
-      ? notices.filter(notice => notice.tag === selectedTag)
-      : notices;
+    return selectedTag === 'All'
+      ? notices
+      : notices.filter(notice => notice.tag === selectedTag);
   }, [notices, selectedTag]);
 
   const uniqueTags = useMemo(
@@ -66,12 +65,12 @@ const Notices = () => {
     <View style={styles.container}>
       <View style={styles.tagsContainer}>
         <TouchableOpacity
-          style={[styles.tag, selectedTag === undefined && styles.selectedTag]}
-          onPress={() => setSelectedTag(undefined)}>
+          style={[styles.tag, selectedTag === 'All' && styles.selectedTag]}
+          onPress={() => setSelectedTag('All')}>
           <Text
             style={[
               styles.tagText,
-              selectedTag === undefined && styles.selectedTag,
+              selectedTag === 'All' && styles.selectedTagWithColor,
             ]}>
             All
           </Text>
@@ -109,12 +108,11 @@ const Notices = () => {
   );
 };
 
-// ... (rest of the code remains unchanged)
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 10,
+    backgroundColor: '#090c13',
   },
   loadingContainer: {
     flex: 1,
@@ -125,12 +123,10 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     padding: 10,
     borderWidth: 1,
-    borderColor: '#ccc',
     borderRadius: 5,
   },
   tagsContainer: {
     flexDirection: 'row',
-    borderBottomWidth: 1,
     marginVertical: 5,
   },
   tag: {
@@ -144,9 +140,13 @@ const styles = StyleSheet.create({
   },
   selectedTagWithColor: {
     fontWeight: '600',
+    borderBottomWidth: 1,
+    paddingBottom: 10,
+    borderColor: 'gray',
   },
   tagText: {
     fontSize: 14,
+    color: 'white',
   },
 });
 

@@ -19,51 +19,17 @@ const PostCard: React.FC<PostCardProps> = ({
   date,
   image,
 }) => {
-  const [liked, setLiked] = useState(false);
-
-  const handleLikePress = () => {
-    setLiked(!liked);
-  };
-
-  const handleCommentPress = () => {};
-
-  const handleSharePress = () => {};
-
   return (
     <View style={styles.container}>
       {image && (
         <Image source={{uri: `${imageuri}/${image}`}} style={styles.image} />
       )}
-      <View style={styles.postCardHeader}>
+      <View>
         <Text style={styles.title}>{title}</Text>
         <Text style={styles.description}>{description}</Text>
         <Text style={styles.authorDate}>
           {author} - {formatDate(date)}
         </Text>
-      </View>
-      <View style={styles.reactionsContainer}>
-        <TouchableOpacity
-          onPress={handleLikePress}
-          style={styles.reactionButton}>
-          <Ionicons
-            name={liked ? 'thumbs-up' : 'thumbs-up-outline'}
-            size={20}
-            color={liked ? 'blue' : 'gray'}
-          />
-          <Text style={styles.reactionText}>Like</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={handleCommentPress}
-          style={styles.reactionButton}>
-          <Ionicons name="chatbubble-outline" size={20} color="blue" />
-          <Text style={styles.reactionText}>Comment</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={handleSharePress}
-          style={styles.reactionButton}>
-          <Ionicons name="share-social-outline" size={20} color="blue" />
-          <Text style={styles.reactionText}>Share</Text>
-        </TouchableOpacity>
       </View>
     </View>
   );
@@ -71,44 +37,30 @@ const PostCard: React.FC<PostCardProps> = ({
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#FFFFFF',
-    paddingHorizontal: 16,
-    marginBottom: 16,
+    backgroundColor: '#090c13',
+    paddingTop: 20,
     borderRadius: 8,
+    paddingHorizontal: 10,
   },
   image: {
     width: '100%',
     height: 200,
     borderRadius: 5,
-    marginBottom: 12,
-  },
-  postCardHeader: {
-    marginBottom: 12,
   },
   title: {
     fontSize: 18,
     fontWeight: 'bold',
-    marginBottom: 8,
+    marginVertical: 8,
+    color: 'white',
   },
   description: {
+    color: 'white',
     fontSize: 14,
     marginBottom: 8,
   },
   authorDate: {
     fontSize: 12,
     color: '#888888',
-  },
-  reactionsContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  reactionButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  reactionText: {
-    marginLeft: 4,
-    color: 'blue',
   },
 });
 

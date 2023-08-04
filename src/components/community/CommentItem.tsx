@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
+import React, {useState} from 'react';
+import {View, Text, StyleSheet, Image} from 'react-native';
 
 interface Comment {
   id: number;
@@ -11,10 +11,10 @@ interface CommentItemProps {
   comment: Comment;
 }
 
-const CommentItem: React.FC<CommentItemProps> = ({ comment }) => {
+const CommentItem: React.FC<CommentItemProps> = ({comment}) => {
   const [liked, setLiked] = useState(false);
   const handleLikePress = () => {
-    setLiked((liked) => !liked);
+    setLiked(liked => !liked);
   };
 
   const handleReplyPress = () => {
@@ -24,36 +24,32 @@ const CommentItem: React.FC<CommentItemProps> = ({ comment }) => {
   return (
     <View style={styles.commentContainer}>
       <View style={styles.userContainer}>
-        <Image source={{ uri: "https://avatars.githubusercontent.com/u/95552086?v=4" }} style={styles.avatar} />
+        <Image
+          source={{uri: 'https://avatars.githubusercontent.com/u/95552086?v=4'}}
+          style={styles.avatar}
+        />
         <View style={styles.userInfo}>
           <Text style={styles.username}>@{comment.author}</Text>
           <Text style={styles.date}>24th July 2023</Text>
         </View>
       </View>
       <Text style={styles.commentText}>{comment.text}</Text>
-      <View style={styles.actionsContainer}>
-        <TouchableOpacity onPress={handleLikePress} style={styles.actionButton}>
-          <Text style={styles.actionText}>{liked ? "Liked" : "Like"}</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={handleReplyPress} style={styles.actionButton}>
-          <Text style={styles.actionText}>Reply</Text>
-        </TouchableOpacity>
-      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   commentContainer: {
-    marginBottom: 8,
+    backgroundColor: '#212121',
+    marginVertical: 8,
     borderWidth: 1,
-    borderColor: "#DDDDDD",
+    borderColor: '#DDDDDD',
     padding: 8,
     borderRadius: 8,
   },
   userContainer: {
-    flexDirection: "row",
-    alignItems: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
     marginBottom: 4,
   },
   avatar: {
@@ -64,32 +60,35 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   userInfo: {
-    flexDirection: "row",
-    alignItems: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
+    color: 'white',
   },
   username: {
     fontSize: 14,
-    fontWeight: "bold",
+    fontWeight: 'bold',
     marginRight: 8,
+    color: 'white',
   },
   date: {
     fontSize: 12,
-    color: "#888888",
+    color: '#888888',
   },
   commentText: {
     marginLeft: 35,
     fontSize: 14,
+    color: 'white',
   },
   actionsContainer: {
     marginLeft: 35,
-    flexDirection: "row",
+    flexDirection: 'row',
     marginTop: 8,
   },
   actionButton: {
     marginRight: 16,
   },
   actionText: {
-    color: "blue",
+    color: 'blue',
     fontSize: 12,
   },
 });

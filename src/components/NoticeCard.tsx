@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
   container: {
     marginVertical: 10,
     padding: 10,
-    backgroundColor: '#2C3333',
+    backgroundColor: '#212121',
     borderRadius: 8,
   },
   title: {

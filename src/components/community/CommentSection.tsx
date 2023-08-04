@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image } from "react-native";
-import CommentItem from "./CommentItem";
+import React, {useState} from 'react';
+import {View, Text, StyleSheet} from 'react-native';
+import CommentItem from './CommentItem';
 
 interface Comment {
   id: number;
@@ -12,27 +12,27 @@ const CommentSection: React.FC = () => {
   const [comments, setComments] = useState<Comment[]>([
     {
       id: 1,
-      text: "This is the sciketest comment i have ever seen in the comment section.",
-      author: "John Doe",
+      text: 'This is the sciketest comment i have ever seen in the comment section.',
+      author: 'John Doe',
     },
     {
       id: 2,
-      text: "Thanks for sharing!",
-      author: "Jane Smith",
+      text: 'Thanks for sharing!',
+      author: 'Jane Smith',
     },
   ]);
-  const [commentText, setCommentText] = useState("");
+  const [commentText, setCommentText] = useState('');
 
   const handleAddComment = () => {
-    if (commentText.trim() !== "") {
+    if (commentText.trim() !== '') {
       const newComment: Comment = {
         id: comments.length + 1,
         text: commentText,
-        author: "John Doe", // Set the author's name or fetch from user authentication
+        author: 'John Doe', // Set the author's name or fetch from user authentication
       };
 
-      setComments((prevComments) => [...prevComments, newComment]);
-      setCommentText("");
+      setComments(prevComments => [...prevComments, newComment]);
+      setCommentText('');
     }
   };
 
@@ -40,25 +40,12 @@ const CommentSection: React.FC = () => {
     <View style={styles.container}>
       <Text style={styles.heading}>Comments</Text>
       {comments.length > 0 ? (
-        comments.map((comment) => <CommentItem key={comment.id} comment={comment} />)
+        comments.map(comment => (
+          <CommentItem key={comment.id} comment={comment} />
+        ))
       ) : (
         <Text style={styles.noCommentsText}>No comments yet.</Text>
       )}
-      <View style={styles.inputContainer}>
-        <TextInput
-          style={styles.commentInput}
-          placeholder="Write a comment..."
-          value={commentText}
-          onChangeText={setCommentText}
-        />
-        <TouchableOpacity
-          onPress={handleAddComment}
-          style={[styles.commentButton, { backgroundColor: commentText.length >= 5 ? "blue" : "#CCCCCC" }]}
-          disabled={commentText.length < 5}
-        >
-          <Text style={styles.commentButtonText}>Add Comment</Text>
-        </TouchableOpacity>
-      </View>
     </View>
   );
 };
@@ -66,27 +53,25 @@ const CommentSection: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 16,
-    paddingTop: 8,
-    paddingBottom: 16,
-    backgroundColor: "#FFFFFF",
+    backgroundColor: '#090c13',
     borderRadius: 8,
     marginBottom: 16,
   },
   heading: {
     fontSize: 16,
-    fontWeight: "bold",
+    fontWeight: 'bold',
     marginBottom: 8,
   },
   commentContainer: {
     marginBottom: 8,
     borderWidth: 1,
-    borderColor: "#DDDDDD",
+    borderColor: '#DDDDDD',
     padding: 8,
     borderRadius: 8,
   },
   userContainer: {
-    flexDirection: "row",
-    alignItems: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
     marginBottom: 4,
   },
   avatar: {
@@ -96,45 +81,25 @@ const styles = StyleSheet.create({
     marginRight: 8,
   },
   userInfo: {
-    flexDirection: "row",
-    alignItems: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   username: {
     fontSize: 14,
-    fontWeight: "bold",
+    fontWeight: 'bold',
     marginRight: 8,
   },
   date: {
     fontSize: 12,
-    color: "#888888",
+    color: '#888888',
   },
   commentText: {
     marginLeft: 35,
     fontSize: 14,
   },
   noCommentsText: {
-    fontStyle: "italic",
-    color: "#888888",
-  },
-  inputContainer: {
-    alignItems: "center",
-    marginVertical: 10,
-  },
-  commentInput: {
-    width: "100%",
-    backgroundColor: "#F5F5F5",
-    borderRadius: 8,
-    padding: 8,
-  },
-  commentButton: {
-    padding: 10,
-    borderRadius: 8,
-    marginVertical: 5,
-    alignSelf: "flex-end",
-  },
-  commentButtonText: {
-    color: "#FFFFFF",
-    fontWeight: "bold",
+    fontStyle: 'italic',
+    color: '#888888',
   },
 });
 

@@ -23,7 +23,7 @@ const CommunityPost = ({route}: any) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#090c13',
     flex: 1,
   },
 });

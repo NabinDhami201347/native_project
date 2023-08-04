@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
 import {View, Text, Image, TouchableOpacity, StyleSheet} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 import {imageuri} from '../../api';
+import {formatDate} from '../../utils/date';
 
 interface PostProps {
   title: string;
@@ -20,7 +20,6 @@ const Post: React.FC<PostProps> = ({
   image,
 }) => {
   const navigation = useNavigation();
-  const [liked, setLiked] = useState(false);
 
   const onPress = () => {
     // @ts-ignore
@@ -33,18 +32,6 @@ const Post: React.FC<PostProps> = ({
     });
   };
 
-  const handleLikePress = () => {
-    setLiked(!liked);
-  };
-
-  const handleCommentPress = () => {
-    // Handle comment press logic
-  };
-
-  const handleSharePress = () => {
-    // Handle share press logic
-  };
-
   return (
     <TouchableOpacity onPress={onPress} style={styles.container}>
       {image && (
@@ -54,32 +41,8 @@ const Post: React.FC<PostProps> = ({
         <Text style={styles.title}>{title}</Text>
         <Text style={styles.description}>{description}</Text>
         <Text style={styles.authorDate}>
-          {author} - {date}
+          {author} - {formatDate(date)}
         </Text>
-      </View>
-      <View style={styles.reactionsContainer}>
-        <TouchableOpacity
-          onPress={handleLikePress}
-          style={styles.reactionButton}>
-          <Ionicons
-            name={liked ? 'thumbs-up' : 'thumbs-up-outline'}
-            size={20}
-            color={liked ? 'blue' : 'gray'}
-          />
-          <Text style={styles.reactionText}>Like</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={handleCommentPress}
-          style={styles.reactionButton}>
-          <Ionicons name="chatbubble-outline" size={20} color="blue" />
-          <Text style={styles.reactionText}>Comment</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={handleSharePress}
-          style={styles.reactionButton}>
-          <Ionicons name="share-social-outline" size={20} color="blue" />
-          <Text style={styles.reactionText}>Share</Text>
-        </TouchableOpacity>
       </View>
     </TouchableOpacity>
   );
@@ -87,7 +50,8 @@ const Post: React.FC<PostProps> = ({
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#212121',
+    color: '#ffffff',
     padding: 10,
     marginBottom: 16,
     borderRadius: 8,
@@ -100,15 +64,18 @@ const styles = StyleSheet.create({
   },
   postHeader: {
     marginBottom: 12,
+    color: '#ffffff',
   },
   title: {
     fontSize: 18,
     fontWeight: 'bold',
     marginBottom: 8,
+    color: '#ffffff',
   },
   description: {
     fontSize: 14,
     marginBottom: 8,
+    color: '#ffffff',
   },
   authorDate: {
     fontSize: 12,
