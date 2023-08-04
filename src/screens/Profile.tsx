@@ -46,8 +46,8 @@ export default ProfileScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: 20,
-    paddingVertical: 20,
+    justifyContent: 'center',
     backgroundColor: '#090C13',
+    paddingHorizontal: 20,
   },
 });

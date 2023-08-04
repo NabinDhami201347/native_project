@@ -42,8 +42,6 @@ export default ProfileIcon;
 const styles = StyleSheet.create({
   container: {
     borderRadius: 100,
-    overflow: 'hidden',
-    paddingHorizontal: 10,
   },
   image: {
     width: 30,

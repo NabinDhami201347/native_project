@@ -44,7 +44,7 @@ const Categories = () => {
 const styles = StyleSheet.create({
   container: {
     justifyContent: 'center',
-    paddingVertical: 20,
+    paddingVertical: 10,
   },
   tag: {
     paddingHorizontal: 20,

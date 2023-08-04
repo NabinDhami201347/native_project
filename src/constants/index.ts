@@ -118,4 +118,52 @@ export const initialBooks = [
     totalBooks: 48,
     semesterId: 2,
   },
+  {
+    image:
+      'https://th.bing.com/th/id/OIP.1AJSRkONXap-dJLVSC0YYgAAAA?pid=ImgDet&rs=1',
+    title: 'Python Programming',
+    description:
+      'Learn Python programming from scratch and become a proficient Python developer.',
+    author: 'John Anderson',
+    tags: ['Python', 'programming'],
+    available: 15,
+    totalBooks: 48,
+    semesterId: 3,
+  },
+  {
+    image:
+      'https://th.bing.com/th/id/R.1f709ce927287f9d008e83593c11e3b7?rik=ujUYkB7qxUrkFw&pid=ImgRaw&r=0',
+    title: 'Artificial Intelligence',
+    description:
+      'A comprehensive guide to understanding the fundamentals of artificial intelligence.',
+    author: 'Sophie Johnson',
+    tags: ['artificial intelligence', 'AI'],
+    available: 24,
+    totalBooks: 48,
+    semesterId: 3,
+  },
+  {
+    image:
+      'https://th.bing.com/th/id/OIP.VkhgVe3dhGcYpvKfl9Q5yAHaLF?pid=ImgDet&rs=1',
+    title: 'Cybersecurity Essentials',
+    description:
+      'Explore the world of cybersecurity and learn essential techniques to protect digital assets.',
+    author: 'Daniel White',
+    tags: ['cybersecurity', 'information security'],
+    available: 40,
+    totalBooks: 48,
+    semesterId: 3,
+  },
+  {
+    image:
+      'https://th.bing.com/th/id/OIP.VLPLRWOOR6j2kgYI7hAE5gHaJp?pid=ImgDet&w=1238&h=1613&rs=1',
+    title: 'JavaScript Mastery',
+    description:
+      'Master the art of JavaScript programming and build interactive web experiences.',
+    author: 'David Smith',
+    tags: ['JavaScript', 'web development'],
+    available: 0,
+    totalBooks: 48,
+    semesterId: 3,
+  },
 ];

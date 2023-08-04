@@ -8,6 +8,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 
 import {useAuthContext} from '../contexts/Auth';
 import {
+  Book,
   Community,
   Forgot,
   Home,
@@ -38,7 +39,9 @@ const PrivateStack = () => {
     <Tab.Navigator
       initialRouteName="Home"
       screenOptions={({route}) => ({
-        tabBarActiveTintColor: 'black',
+        tabBarActiveTintColor: 'white',
+        tabBarActiveBackgroundColor: '#090C13',
+        tabBarInactiveBackgroundColor: '#090C13',
         headerShown: false,
         tabBarIcon: ({color, size, focused}) => {
           let iconName = '';
@@ -77,19 +80,12 @@ export default function Routes() {
   return (
     <NavigationContainer>
       {access_token ? (
-        <Stack.Navigator>
-          <Stack.Screen
-            name="HomeScreen"
-            component={PrivateStack}
-            options={{headerShown: false}} // Bottom Tabs
-          />
+        <Stack.Navigator screenOptions={{headerShown: false}}>
+          <Stack.Screen name="HomeScreen" component={PrivateStack} />
           <Stack.Screen name="Profile" component={Profile} />
           <Stack.Screen name="Notice" component={Notice} />
-          <Stack.Screen
-            name="CommunityPost"
-            component={CommunityPost}
-            options={{headerShown: false}}
-          />
+          <Stack.Screen name="CommunityPost" component={CommunityPost} />
+          <Stack.Screen name="Book" component={Book} />
         </Stack.Navigator>
       ) : (
         <PublicStack />

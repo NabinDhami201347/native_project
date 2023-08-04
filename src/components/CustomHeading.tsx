@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   paragraph: {
-    fontSize: 12,
+    fontSize: 14,
     color: 'white',
     opacity: 0.5,
     marginBottom: 8,

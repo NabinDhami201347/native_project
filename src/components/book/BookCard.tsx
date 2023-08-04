@@ -14,7 +14,7 @@ const BookCard: React.FC<BookCardProps> = ({book}) => {
 
   const handleBookSelection = () => {
     // @ts-ignore
-    // navigation.navigate('Book', book);
+    navigation.navigate('Book', book);
   };
 
   return (

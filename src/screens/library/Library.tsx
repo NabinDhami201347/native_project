@@ -27,40 +27,30 @@ const Section: React.FC<SectionProps> = ({title, children}) => {
 };
 
 const Library = () => {
-  // const handleSearch = query => {
-  //   setSearchQuery(query);
-  //   const filtered = notifications.filter(
-  //     notification =>
-  //       notification.title.toLowerCase().includes(query.toLowerCase()) ||
-  //       notification.date.toLowerCase().includes(query.toLowerCase()) ||
-  //       notification.content.toLowerCase().includes(query.toLowerCase()),
-  //   );
-  //   setFilteredNotifications(filtered);
-  // };
-
   return (
     <View style={styles.container}>
-      <View style={styles.searchBarContainer}>
-        <Ionicons
-          name="search"
-          size={20}
-          color="#888"
-          style={styles.searchIcon}
-        />
-        <TextInput
-          style={styles.searchBar}
-          placeholder="Search fo favourite"
-          placeholderTextColor="rgba(120,120,120,0.5)"
-        />
+      <View style={{borderWidth: 5, borderEndColor: 'gray', marginBottom: 10}}>
+        <View style={styles.searchBarContainer}>
+          <Ionicons
+            name="search"
+            size={20}
+            color="#888"
+            style={styles.searchIcon}
+          />
+          <TextInput
+            style={styles.searchBar}
+            placeholder="Search fo favourite"
+            placeholderTextColor="rgba(120,120,120,0.5)"
+          />
+        </View>
+        <Categories />
       </View>
 
       <ScrollView showsVerticalScrollIndicator={false}>
-        <View>
-          <Categories />
-        </View>
+        <View></View>
 
         <View style={styles.contentContainer}>
-          <Section title="First Semesterr">
+          <Section title="First Semester">
             <Books semesterId={1} />
           </Section>
 
@@ -69,6 +59,25 @@ const Library = () => {
           </Section>
 
           <Section title="Third Semester">
+            <Books semesterId={3} />
+          </Section>
+          <Section title="Fourth Semester">
+            <Books semesterId={1} />
+          </Section>
+
+          <Section title="Fifth Semester">
+            <Books semesterId={2} />
+          </Section>
+
+          <Section title="Sixth Semester">
+            <Books semesterId={3} />
+          </Section>
+
+          <Section title="Seventh Semester">
+            <Books semesterId={2} />
+          </Section>
+
+          <Section title="Eighth Semester">
             <Books semesterId={3} />
           </Section>
         </View>
@@ -81,13 +90,9 @@ const styles = StyleSheet.create({
   contentContainer: {
     paddingHorizontal: 5,
   },
-  seeAllText: {
-    color: '#22A699',
-    fontSize: 16,
-  },
   container: {
     flex: 1,
-    paddingTop: 20,
+    paddingTop: 40,
     backgroundColor: '#090C13',
   },
   searchBarContainer: {
@@ -108,30 +113,6 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     fontSize: 16,
     color: 'rgba(120,120,120,1)',
-  },
-  notificationItem: {
-    paddingHorizontal: 16,
-    paddingVertical: 12,
-    borderBottomWidth: 1,
-    marginBottom: 20,
-    backgroundColor: '#212121',
-    borderRadius: 7,
-    marginLeft: 12,
-    marginRight: 12,
-  },
-  notificationTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: 'rgba(140,140,140,1)',
-  },
-  notificationContent: {
-    fontSize: 16,
-    color: '#888',
-    color: 'rgba(130,130,130,0.7)',
-  },
-  notificationDate: {
-    fontSize: 14,
-    color: '#666',
   },
 });
 
