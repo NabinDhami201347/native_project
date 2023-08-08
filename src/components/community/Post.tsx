@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import {Card} from 'react-native-paper';
 import {View, Text, Image, TouchableOpacity, StyleSheet} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {imageuri} from '../../api';
@@ -19,6 +20,7 @@ const Post: React.FC<PostProps> = ({
   author,
   date,
   image,
+  profileImage,
 }) => {
   const navigation = useNavigation();
 
@@ -30,6 +32,7 @@ const Post: React.FC<PostProps> = ({
       author,
       date,
       image,
+      profileImage,
     });
   };
 
@@ -42,7 +45,13 @@ const Post: React.FC<PostProps> = ({
         <Text style={styles.title}>{title}</Text>
         <Text style={styles.description}>{description}</Text>
 
-        <View style={{flexDirection: 'row', alignItems: 'center', gap: 10}}>
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            gap: 10,
+            marginVertical: 10,
+          }}>
           <Image source={{uri: `${imageuri}/${image}`}} style={styles.avatar} />
           <Text style={styles.authorDate}>{author}</Text>
           <Text style={styles.authorDate}>{formatDate(date)}</Text>

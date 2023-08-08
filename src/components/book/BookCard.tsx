@@ -2,7 +2,7 @@ import React from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {Image, StyleSheet, TouchableOpacity} from 'react-native';
 
-import {Paragraph, SmallHeading} from '../CustomHeading';
+import {Paragraph, SmallHeading} from '../custom/CustomHeading';
 import {Book} from '../../contexts/Book';
 
 interface BookCardProps {

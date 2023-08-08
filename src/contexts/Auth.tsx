@@ -31,7 +31,7 @@ enum ActionTypes {
   SetUser,
   SetLoading,
   UpdateUser,
-  SetUserDataFetched, // New action type
+  SetUserDataFetched,
 }
 
 interface Action {
@@ -44,7 +44,7 @@ const initialState: AuthContextValue = {
   access_token: null,
   refresh_token: null,
   isLoading: true,
-  userDataFetched: false, // Initialize userDataFetched to false
+  userDataFetched: false,
   setTokens: async (_access_token, _refresh_token) => {},
   removeTokens: async () => {},
   updateUser: (userData: UserData) => {},
@@ -87,25 +87,21 @@ const AuthContext = createContext<AuthContextValue | null>(initialState);
 export const AuthProvider = ({children}: {children: ReactNode}) => {
   const [state, dispatch] = useReducer(authReducer, initialState);
   const [loading, setLoading] = useState(true);
-  // console.log(state);
 
   useEffect(() => {
     const bootstrapAsync = async () => {
       try {
-        // Check if user data has already been fetched
         if (state.userDataFetched) {
           setLoading(false);
           return;
         }
 
-        // Simulate a 4-second delay for token retrieval
-        await new Promise(resolve => setTimeout(resolve, 4000));
+        await new Promise(resolve => setTimeout(resolve, 2000));
 
         const userAccessToken = await AsyncStorage.getItem('userAccessToken');
         const userRefreshToken = await AsyncStorage.getItem('userRefreshToken');
 
         if (userAccessToken && userRefreshToken) {
-          // If access_token exists, make the API request
           const {data} = await protectedInstance.get('auth/profile');
 
           dispatch({type: ActionTypes.SetUser, payload: data});
@@ -119,18 +115,15 @@ export const AuthProvider = ({children}: {children: ReactNode}) => {
           },
         });
 
-        // Mark userDataFetched as true to prevent future API calls
         dispatch({type: ActionTypes.SetUserDataFetched});
       } catch (error) {
-        console.error('Error retrieving tokens:', error);
       } finally {
         setLoading(false);
       }
     };
 
     bootstrapAsync();
-  }, [state.userDataFetched]); // Add state.userDataFetched to the dependency array
-
+  }, [state.userDataFetched]);
   const updateUser = (userData: UserData) => {
     dispatch({type: ActionTypes.UpdateUser, payload: userData});
   };
@@ -147,9 +140,7 @@ export const AuthProvider = ({children}: {children: ReactNode}) => {
             refresh_token: newRefreshToken,
           },
         });
-      } catch (error) {
-        console.error('Error setting tokens:', error);
-      }
+      } catch (error) {}
     },
     [],
   );
@@ -159,9 +150,7 @@ export const AuthProvider = ({children}: {children: ReactNode}) => {
       await AsyncStorage.removeItem('userAccessToken');
       await AsyncStorage.removeItem('userRefreshToken');
       dispatch({type: ActionTypes.RemoveTokens});
-    } catch (error) {
-      console.error('Error removing tokens:', error);
-    }
+    } catch (error) {}
   }, []);
 
   const authContextValue = useMemo(

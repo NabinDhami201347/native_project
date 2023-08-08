@@ -14,8 +14,8 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import mime from 'mime';
-import {useAuthContext} from '../contexts/Auth';
-import {imageuri, protectedInstance} from '../api';
+import {useAuthContext} from '../../contexts/Auth';
+import {imageuri, protectedInstance} from '../../api';
 
 const ProfileCard = () => {
   const [selectedImage, setSelectedImage] =
@@ -24,7 +24,6 @@ const ProfileCard = () => {
   const [uploading, setUploading] = useState(false);
 
   const pickImage = () => {
-    console.log('object');
     launchImageLibrary(
       {
         mediaType: 'photo',
@@ -46,7 +45,6 @@ const ProfileCard = () => {
   };
 
   const uploadImage = async () => {
-    console.log('uploading');
     if (!selectedImage) {
       return;
     }
@@ -82,10 +80,8 @@ const ProfileCard = () => {
       if (response && response.data && response.data.user) {
         updateUser(response.data.user);
       } else {
-        console.log('Error in API response:', response.data);
       }
     } catch (error) {
-      console.log('Upload failed:', error);
     } finally {
       setUploading(false); // Hide loading indicator after upload completion
       setSelectedImage(null);

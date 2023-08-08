@@ -1,37 +1,27 @@
-import React, {FC} from 'react';
-import {
-  Pressable,
-  Text,
-  StyleProp,
-  ViewStyle,
-  StyleSheet,
-  PressableProps,
-} from 'react-native';
+import React from 'react';
+import {Pressable, ViewStyle, StyleSheet} from 'react-native';
 import Feather from 'react-native-vector-icons/Feather';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-export type IconLibrary = {
-  [key: string]: () => React.ComponentType<any>;
+type IconFamily = 'Feather' | 'MaterialCommunityIcons';
+
+const ICON_LIBRARIES = {
+  Feather,
+  MaterialCommunityIcons,
 };
 
-const ICON_LIBRARIES: IconLibrary = {
-  Feather: () => Feather,
-  MaterialCommunityIcons: () => MaterialCommunityIcons,
-  // add more libraries as needed
-};
-
-export type IconButtonProps = PressableProps & {
+type IconButtonProps = {
   icon: string;
-  iconFamily?: 'Feather' | 'MaterialCommunityIcons';
+  iconFamily?: IconFamily;
   variant?: 'text' | 'contained' | 'outline';
   size?: 'small' | 'medium' | 'big';
   iconColor?: string;
   roundness?: 'full' | 'medium' | 'small';
-  style?: StyleProp<ViewStyle>;
+  style?: ViewStyle;
   onPress?: () => void;
 };
 
-const IconButton: FC<IconButtonProps> = ({
+const IconButton: React.FC<IconButtonProps> = ({
   icon,
   iconFamily = 'Feather',
   variant = 'contained',
@@ -40,9 +30,8 @@ const IconButton: FC<IconButtonProps> = ({
   roundness = 'medium',
   style = {},
   onPress,
-  ...rest
-}: IconButtonProps) => {
-  const Icon = ICON_LIBRARIES[iconFamily]();
+}) => {
+  const Icon = ICON_LIBRARIES[iconFamily];
   const iconSize = size === 'big' ? 24 : size === 'medium' ? 16 : 12;
   const buttonSize = size === 'big' ? 48 : size === 'medium' ? 36 : 24;
 
@@ -52,14 +41,13 @@ const IconButton: FC<IconButtonProps> = ({
     styles[`${roundness}Roundness`],
     {width: buttonSize, height: buttonSize},
     style,
-  ] as StyleProp<ViewStyle>;
+  ];
 
   return (
     <Pressable
-      {...rest}
       onPress={onPress}
       style={({pressed}) => [
-        buttonStyles,
+        ...buttonStyles,
         pressed && styles.buttonPressed,
         pressed && styles.shadow,
       ]}>
@@ -107,7 +95,6 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.18,
     shadowRadius: 1.0,
-
     elevation: 1,
   },
 });

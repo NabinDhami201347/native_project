@@ -1,4 +1,3 @@
-import {StyleSheet} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import React, {PropsWithChildren} from 'react';
 
@@ -11,5 +10,3 @@ const CustomIcon = ({name}: IconsProps) => {
 };
 
 export default CustomIcon;
-
-const styles = StyleSheet.create({});

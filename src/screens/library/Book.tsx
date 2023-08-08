@@ -2,12 +2,12 @@ import React from 'react';
 import {View, Image, StyleSheet, Dimensions} from 'react-native';
 
 import Books from '../../components/book/Books';
-import CustomButton from '../../components/CustomButton';
+import CustomButton from '../../components/custom/CustomButton';
 import {
   LargeHeading,
   Paragraph,
   SmallHeading,
-} from '../../components/CustomHeading';
+} from '../../components/custom/CustomHeading';
 
 const Book = ({route}: any) => {
   const {image, title, description, author, available, totalBooks, semesterId} =

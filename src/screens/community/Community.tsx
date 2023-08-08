@@ -30,10 +30,6 @@ const Community = () => {
       setPosts(response.data);
       setLoading(false);
     } catch (error: any) {
-      console.error(
-        'Error fetching posts:',
-        error.response?.data?.error || error.message,
-      );
       setLoading(false);
     }
   };

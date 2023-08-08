@@ -1,4 +1,4 @@
-import React, {FC, useMemo, useState} from 'react';
+import React, {FC} from 'react';
 import {StyleSheet, View} from 'react-native';
 import Svg, {Path} from 'react-native-svg';
 import Animated, {
@@ -31,17 +31,18 @@ export const CustomBottomTab: FC<BottomTabBarProps> = ({
   const selectIcon = (routeName: string) => {
     switch (routeName) {
       case 'Home':
-        return 'home';
+        return {icon: 'home'};
       case 'Notification':
-        return 'bell';
+        return {icon: 'notifications'};
       case 'Calendar':
-        return 'calendar';
-      case 'book':
-        return 'book';
+        return {icon: 'calendar'};
+      case 'Library':
+        return {icon: 'library'};
       default:
-        return 'home';
+        return {icon: 'home'};
     }
   };
+
   const animatedProps = useAnimatedProps(() => {
     const currentPath = interpolatePath(
       progress.value,
@@ -79,7 +80,7 @@ export const CustomBottomTab: FC<BottomTabBarProps> = ({
             <TabItem
               key={index.toString()}
               label={label as string}
-              icon={selectIcon(route.name)}
+              {...selectIcon(route.name)}
               activeIndex={state.index + 1}
               index={index}
               onTabPress={() => handleTabPress(index + 1, route.name)}

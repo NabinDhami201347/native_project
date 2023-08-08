@@ -9,13 +9,13 @@ import {
 import {useForm} from 'react-hook-form';
 import {zodResolver} from '@hookform/resolvers/zod';
 
-import CustomButton from '../../components/CustomButton';
-import ControlledInput from '../../components/ControlledInput';
+import CustomButton from '../../components/custom/CustomButton';
+import ControlledInput from '../../components/custom/ControlledInput';
 
 import {publicInstance} from '../../api';
 import {useAuthContext} from '../../contexts/Auth';
 import LoginImage from '../../assets/svgs/LoginImage';
-import {LoginInput, loginUserSchema} from '../../schema/login';
+import {LoginInput, loginUserSchema} from '../../schema';
 
 const Login = ({navigation}: any) => {
   const [error, setError] = useState('');
@@ -28,15 +28,15 @@ const Login = ({navigation}: any) => {
   const passwordInputRef = useRef<TextInput | null>(null);
 
   const handlePress = async (user: LoginInput) => {
+    console.log('object');
     try {
-      console.log(user);
       const {data} = await publicInstance.post('/auth/login', user);
 
       console.log(data, 'data');
+
       setTokens(data.access_token, data.refresh_token);
     } catch (error: any) {
       setError(error.response.data.error);
-      console.error(error.response.data.error);
     }
   };
 

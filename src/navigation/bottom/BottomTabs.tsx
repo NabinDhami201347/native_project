@@ -1,27 +1,30 @@
 import {Text, View} from 'react-native';
 import CustomBottomTab from './components/shared/BottomTabs/CustomBottomTab';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {CalendarScreen} from '../../screens';
 
-const Books = () => {
+const Library = () => {
   return (
     <View style={{backgroundColor: 'green', flex: 1}}>
       <Text>Books</Text>
     </View>
   );
 };
-const Calendar = () => {
-  return <Text>Calander</Text>;
-};
 const Home = () => {
-  return <Text>Home</Text>;
+  return (
+    <View style={{flex: 1, backgroundColor: '#272829'}}>
+      <Text>Home</Text>
+    </View>
+  );
 };
+
 const NotificationTopTabs = () => {
   return <Text>Notifiations</Text>;
 };
 
 const Tab = createBottomTabNavigator();
 
-const BottomTabs = ({navigation}: any) => {
+const BottomTabs = () => {
   return (
     <Tab.Navigator tabBar={props => <CustomBottomTab {...props} />}>
       <Tab.Group
@@ -42,12 +45,12 @@ const BottomTabs = ({navigation}: any) => {
         <Tab.Screen
           options={{tabBarLabel: 'Calendar'}}
           name="Calendar"
-          component={Calendar}
+          component={CalendarScreen}
         />
         <Tab.Screen
-          options={{tabBarLabel: 'Books'}}
-          name="book"
-          component={Books}
+          options={{tabBarLabel: 'Library'}}
+          name="Library"
+          component={Library}
         />
       </Tab.Group>
     </Tab.Navigator>

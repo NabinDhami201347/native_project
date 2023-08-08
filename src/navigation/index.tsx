@@ -9,6 +9,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import {useAuthContext} from '../contexts/Auth';
 import {
   Book,
+  Change,
   Community,
   Forgot,
   Home,
@@ -18,8 +19,13 @@ import {
   Notices,
   Profile,
   Signup,
+  CommunityPost,
+  Syllabus,
+  RoutineScreen,
+  ResultScreen,
+  AttendanceScreen,
 } from '../screens';
-import CommunityPost from '../screens/community/CommunityPost';
+import BottomTabs from './bottom/BottomTabs';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -79,17 +85,25 @@ export default function Routes() {
 
   return (
     <NavigationContainer>
-      {access_token ? (
+      {/* {access_token ? (
         <Stack.Navigator screenOptions={{headerShown: false}}>
           <Stack.Screen name="HomeScreen" component={PrivateStack} />
           <Stack.Screen name="Profile" component={Profile} />
           <Stack.Screen name="Notice" component={Notice} />
           <Stack.Screen name="CommunityPost" component={CommunityPost} />
           <Stack.Screen name="Book" component={Book} />
+          <Stack.Screen name="Calendar" component={AcademicCalendarScreen} />
+          <Stack.Screen name="Syllabus" component={Syllabus} />
+          <Stack.Screen name="Routine" component={RoutineScreen} />
+          <Stack.Screen name="ChangePassword" component={Change} />
+          <Stack.Screen name="Result" component={ResultScreen} />
+          <Stack.Screen name="Attendance" component={AttendanceScreen} />
         </Stack.Navigator>
       ) : (
         <PublicStack />
-      )}
+      )} */}
+
+      <BottomTabs />
     </NavigationContainer>
   );
 }

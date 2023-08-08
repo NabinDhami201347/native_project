@@ -8,7 +8,6 @@ export interface Profile {
   studentId: number;
 }
 
-// Define the main data type
 export interface UserData {
   id: number;
   name: string;

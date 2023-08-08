@@ -1,15 +1,19 @@
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, View, TouchableOpacity} from 'react-native';
 
 import {useAuthContext} from '../contexts/Auth';
-import ProfileCard from '../components/ProfileCard';
-import CustomCard from '../components/CustomCard';
-import CustomButton from '../components/CustomButton';
+import ProfileCard from '../components/profile/ProfileCard';
+import CustomCard from '../components/custom/CustomCard';
+import CustomButton from '../components/custom/CustomButton';
 
-const ProfileScreen = () => {
+const ProfileScreen = ({navigation}: any) => {
   const {removeTokens} = useAuthContext();
   const handleLogout = () => {
     removeTokens();
+  };
+
+  const handlePress = () => {
+    navigation.navigate('ChangePassword');
   };
 
   return (
@@ -33,6 +37,14 @@ const ProfileScreen = () => {
         <CustomCard title="Total Subjects" icon="calendar" content="24" />
         <CustomCard title="Subject Passed" icon="book" content="24" />
       </View>
+
+      <TouchableOpacity style={{flexDirection: 'row'}} onPress={handlePress}>
+        <CustomCard
+          title="Change Password"
+          icon="lock"
+          content="Change your password freqeuntly!!"
+        />
+      </TouchableOpacity>
 
       <View style={{flexDirection: 'row'}}>
         <CustomButton title="Logout" onPress={handleLogout} />

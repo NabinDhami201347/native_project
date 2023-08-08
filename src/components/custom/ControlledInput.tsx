@@ -1,12 +1,11 @@
 import React, {forwardRef, Ref, useState} from 'react';
 import {View, TextInput, TouchableOpacity, StyleSheet} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import {Control, Controller} from 'react-hook-form';
+import {Controller} from 'react-hook-form';
 import {Text} from 'react-native-paper';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 type ControlledInputProps = {
-  // control: Control;
   control: any;
   name: string;
   icon: string;

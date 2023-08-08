@@ -30,10 +30,6 @@ const Notices = () => {
       setNotices(response.data);
       setLoading(false);
     } catch (error: any) {
-      console.error(
-        'Error fetching notices:',
-        error.response?.data?.error || error.message,
-      );
       setLoading(false);
     }
   };

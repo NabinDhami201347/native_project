@@ -22,14 +22,11 @@ export default AnimatedCircle;
 const styles = StyleSheet.create({
   container: {
     position: 'absolute',
-    // top: -circleContainerSize / 14,
+    top: -circleContainerSize / 1.1,
     width: circleContainerSize,
     borderRadius: circleContainerSize,
     height: circleContainerSize,
-    // backgroundColor: '#B508F1',
-    backgroundColor: 'rgba(181,100,241,0.9)',
-    // backgroundColor: 'rgba(170,170,200,0.6)',
-
+    backgroundColor: '#7A0BC0',
     justifyContent: 'center',
     alignItems: 'center',
   },

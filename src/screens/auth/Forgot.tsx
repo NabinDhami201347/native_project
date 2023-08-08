@@ -4,10 +4,10 @@ import React, {useRef, useState} from 'react';
 import {useForm} from 'react-hook-form';
 
 import {publicInstance} from '../../api';
-import CustomButton from '../../components/CustomButton';
-import ControlledInput from '../../components/ControlledInput';
+import CustomButton from '../../components/custom/CustomButton';
+import ControlledInput from '../../components/custom/ControlledInput';
 
-import {ForgotInput, forgotUserSchema} from '../../schema/forgot';
+import {ForgotInput, forgotUserSchema} from '../../schema';
 
 const Forgot = ({navigation}: any) => {
   const [error, setError] = useState('');
@@ -24,7 +24,6 @@ const Forgot = ({navigation}: any) => {
       navigation.navigate('SignIn');
     } catch (error: any) {
       setError(error.response.data.error);
-      console.error(error.response.data.error);
     }
   };
 

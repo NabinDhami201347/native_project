@@ -1,3 +1,4 @@
+import {useNavigation} from '@react-navigation/native';
 import React from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -25,8 +26,8 @@ const data: HomeItem[] = [
     color: 'rgba(181, 100, 241, 0.6)',
   },
   {
-    name: 'Library',
-    iconName: 'library',
+    name: 'Calendar',
+    iconName: 'calendar',
     color: 'rgba(111, 201, 181, 0.6)',
   },
   {
@@ -53,9 +54,12 @@ const data: HomeItem[] = [
 
 const HomeItems: React.FC = () => {
   const iconSize: number = 40;
+  const navigation = useNavigation();
 
   const renderItem = ({item}: {item: HomeItem}) => (
-    <TouchableOpacity style={styles.tc}>
+    <TouchableOpacity
+      style={styles.tc}
+      onPress={() => navigation.navigate(item.name)}>
       <View style={[styles.circle, {backgroundColor: item.color}]}>
         <Ionicons name={item.iconName} size={iconSize} color="white" />
       </View>

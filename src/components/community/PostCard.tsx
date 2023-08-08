@@ -23,12 +23,16 @@ const PostCard: React.FC<PostCardProps> = ({
       {image && (
         <Image source={{uri: `${imageuri}/${image}`}} style={styles.image} />
       )}
-      <View>
-        <Text style={styles.title}>{title}</Text>
-        <Text style={styles.description}>{description}</Text>
-        <Text style={styles.authorDate}>
-          {author} - {formatDate(date)}
-        </Text>
+      <View
+        style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          gap: 10,
+          marginVertical: 10,
+        }}>
+        <Image source={{uri: `${imageuri}/${image}`}} style={styles.avatar} />
+        <Text style={styles.authorDate}>{author}</Text>
+        <Text style={styles.authorDate}>{formatDate(date)}</Text>
       </View>
     </View>
   );
@@ -60,6 +64,12 @@ const styles = StyleSheet.create({
   authorDate: {
     fontSize: 12,
     color: '#888888',
+  },
+  avatar: {
+    width: 24,
+    height: 24,
+    borderRadius: 12,
+    marginRight: 8,
   },
 });
 

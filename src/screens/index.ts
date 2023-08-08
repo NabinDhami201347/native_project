@@ -17,6 +17,14 @@ import Post from './community/CommunityPost';
 
 import Library from './library/Library';
 import Book from './library/Book';
+import CommunityPost from './community/CommunityPost';
+
+import CalendarScreen from './calander/Calander';
+
+import Syllabus from './syllabus/Syllabus';
+import RoutineScreen from './routine/Routine';
+import ResultScreen from './result/Result';
+import AttendanceScreen from './attendance/Attendance';
 
 export {
   Change,
@@ -34,4 +42,12 @@ export {
   Post,
   Library,
   Book,
+
+  ///
+  CommunityPost,
+  CalendarScreen,
+  Syllabus,
+  RoutineScreen,
+  ResultScreen,
+  AttendanceScreen,
 };

@@ -4,7 +4,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import Books from '../../components/book/Books';
 import Categories from '../../components/book/Categories';
-import {LargeHeading} from '../../components/CustomHeading';
+import {LargeHeading} from '../../components/custom/CustomHeading';
 
 interface SectionProps {
   title: string;

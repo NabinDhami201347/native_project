@@ -1,15 +1,18 @@
-import {Pressable, StyleSheet, Text, View} from 'react-native';
 import React, {FC, useEffect} from 'react';
+import {Pressable, StyleSheet, Text} from 'react-native';
 import Animated, {
-  useAnimatedProps,
   useAnimatedStyle,
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
-import Feather from 'react-native-vector-icons/Feather';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import {getPathXCenterByIndex} from '../../../utils/Path';
 import usePath from '../../../hooks/usePath';
 import {SCREEN_WIDTH} from '../../../constants/Screen';
+
+const ICON_SIZE = 25;
+const LABEL_WIDTH = SCREEN_WIDTH / 4;
+
 export type TabProps = {
   label: string;
   icon: string;
@@ -17,9 +20,7 @@ export type TabProps = {
   activeIndex: number;
   onTabPress: () => void;
 };
-const ICON_SIZE = 25;
-const LABEL_WIDTH = SCREEN_WIDTH / 4;
-const AnimatedIcon = Animated.createAnimatedComponent(Feather);
+
 const TabItem: FC<TabProps> = ({
   label,
   icon,
@@ -44,6 +45,7 @@ const TabItem: FC<TabProps> = ({
       ],
     };
   });
+
   const labelContainerStyle = useAnimatedStyle(() => {
     const translateY = animatedActiveIndex.value - 1 === index ? 36 : 100;
     return {
@@ -53,36 +55,31 @@ const TabItem: FC<TabProps> = ({
       ],
     };
   });
+
   const iconColor = useSharedValue(
-    // for active color a
-    activeIndex === index + 1 ? 'white' : 'rgba(128,128,128,0.8)',
+    activeIndex === index + 1 ? '#090c13' : 'rgba(128,128,128,0.8)',
   );
 
-  //Adjust Icon color for this first render
   useEffect(() => {
     animatedActiveIndex.value = activeIndex;
-    if (activeIndex === index + 1) {
-      iconColor.value = withTiming('black');
-    } else {
-      iconColor.value = withTiming('rgba(128,128,128,0.8)');
-    }
+    iconColor.value = withTiming(
+      activeIndex === index + 1 ? 'white' : 'rgba(128,128,128,0.8)',
+    );
   }, [activeIndex]);
 
-  const animatedIconProps = useAnimatedProps(() => ({
-    color: iconColor.value,
-  }));
   return (
     <>
       <Animated.View style={[tabStyle]}>
         <Pressable
           testID={`tab${label}`}
-          //Increasing touchable Area
           hitSlop={{top: 30, bottom: 30, left: 50, right: 50}}
           onPress={onTabPress}>
-          <AnimatedIcon
-            name={icon}
+          <Ionicons
+            name={activeIndex === index + 1 ? icon : icon + '-outline'}
             size={25}
-            animatedProps={animatedIconProps}
+            color={
+              activeIndex === index + 1 ? 'white' : 'rgba(128, 128, 128, 0.8)'
+            }
           />
         </Pressable>
       </Animated.View>
@@ -102,7 +99,7 @@ const styles = StyleSheet.create({
     width: LABEL_WIDTH,
   },
   label: {
-    color: 'rgba(128,128,128,0.8)',
+    color: '#9E9FA5',
     fontSize: 17,
   },
 });
