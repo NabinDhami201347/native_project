@@ -34,10 +34,10 @@ export const CustomBottomTab: FC<BottomTabBarProps> = ({
         return {icon: 'home'};
       case 'Notification':
         return {icon: 'notifications'};
-      case 'Calendar':
-        return {icon: 'calendar'};
+      case 'Community':
+        return {icon: 'rocket'};
       case 'Library':
-        return {icon: 'library'};
+        return {icon: 'book'};
       default:
         return {icon: 'home'};
     }

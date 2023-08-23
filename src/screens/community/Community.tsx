@@ -3,6 +3,7 @@ import {View, FlatList, StyleSheet, ActivityIndicator} from 'react-native';
 
 import Post from '../../components/community/Post';
 import {protectedInstance} from '../../api';
+import {COLORS} from '../../constants/colors';
 
 interface IPost {
   id: number;
@@ -14,8 +15,8 @@ interface IPost {
   studentId: number;
   student: {
     name: string;
-    profile: {
-      photo: string;
+    profile?: {
+      photo?: string;
     };
   };
 }
@@ -58,7 +59,7 @@ const Community = () => {
             author={item.student.name}
             date={item.createdAt}
             image={item.image}
-            profileImage={item.student.profile.photo}
+            profileImage={item.student?.profile?.photo}
           />
         )}
         contentContainerStyle={styles.postList}
@@ -70,12 +71,12 @@ const Community = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingVertical: 20,
-    backgroundColor: '#090c13',
+    paddingBottom: 40,
+    backgroundColor: COLORS.BACKGROUND_DARK,
   },
   postList: {
-    paddingVertical: 16,
-    paddingHorizontal: 16,
+    paddingVertical: 20,
+    paddingHorizontal: 5,
   },
   loadingContainer: {
     flex: 1,

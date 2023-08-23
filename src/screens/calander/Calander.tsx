@@ -1,7 +1,6 @@
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
 import {Calendar, LocaleConfig} from 'react-native-calendars';
-import CalendarCard from '../../components/CalendarCard';
 
 LocaleConfig.locales['en'] = {
   monthNames: [
@@ -52,30 +51,14 @@ const ACADEMIC_CALENDAR = {
 };
 
 const CalendarScreen = () => {
-  const calendarData = [
-    {date: 'September 3, 2023', event: 'Labor Day', holiday: true},
-    {date: 'November 25, 2023', event: 'Black Friday'},
-    {date: 'August 15, 2023', event: 'Womens Day', holiday: true},
-    {date: 'October 10, 2023', event: 'World Mental Health Day'},
-  ];
-
   return (
     <View style={styles.container}>
       <Calendar
         markedDates={ACADEMIC_CALENDAR}
         markingType={'multi-dot'}
-        theme={{
-          calendarBackground: '#222',
-          dayTextColor: '#fff',
-          textDisabledColor: '#444',
-          monthTextColor: '#888',
-        }}
+        theme={{calendarBackground: '#222'}}
         style={styles.calendar}
       />
-
-      {calendarData.map(({date, event, holiday}) => (
-        <CalendarCard key={date} date={date} event={event} holiday={holiday} />
-      ))}
     </View>
   );
 };
@@ -83,9 +66,9 @@ const CalendarScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#272829',
     paddingHorizontal: 10,
-    paddingVertical: 20,
+    backgroundColor: '#272829',
+    justifyContent: 'center',
   },
   calendar: {
     borderWidth: 1,

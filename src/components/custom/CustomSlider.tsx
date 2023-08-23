@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
   },
   slide: {
     width: Dimensions.get('window').width,
-    height: 160,
+    height: 200,
     alignItems: 'center',
     justifyContent: 'center',
   },

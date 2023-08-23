@@ -5,6 +5,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import Books from '../../components/book/Books';
 import Categories from '../../components/book/Categories';
 import {LargeHeading} from '../../components/custom/CustomHeading';
+import {COLORS} from '../../constants/colors';
 
 interface SectionProps {
   title: string;
@@ -29,7 +30,7 @@ const Section: React.FC<SectionProps> = ({title, children}) => {
 const Library = () => {
   return (
     <View style={styles.container}>
-      <View style={{borderWidth: 5, borderEndColor: 'gray', marginBottom: 10}}>
+      <View style={{marginBottom: 10}}>
         <View style={styles.searchBarContainer}>
           <Ionicons
             name="search"
@@ -47,8 +48,6 @@ const Library = () => {
       </View>
 
       <ScrollView showsVerticalScrollIndicator={false}>
-        <View></View>
-
         <View style={styles.contentContainer}>
           <Section title="First Semester">
             <Books semesterId={1} />
@@ -89,11 +88,12 @@ const Library = () => {
 const styles = StyleSheet.create({
   contentContainer: {
     paddingHorizontal: 5,
+    paddingBottom: 50,
   },
   container: {
     flex: 1,
     paddingTop: 40,
-    backgroundColor: '#090C13',
+    backgroundColor: COLORS.BACKGROUND_DARK,
   },
   searchBarContainer: {
     flexDirection: 'row',
@@ -102,7 +102,8 @@ const styles = StyleSheet.create({
     marginBottom: 12,
     borderRadius: 5,
     paddingLeft: 10,
-    backgroundColor: '#212121',
+    padding: 5,
+    backgroundColor: '#121112',
   },
   searchIcon: {
     marginRight: 8,

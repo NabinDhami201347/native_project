@@ -25,4 +25,5 @@
 background-color: "#272829"
 ```
 
-> [Vector Icons](https://oblador.github.io/react-native-vector-icons/)
+> [Vector Icons](https://oblador.github.io/react-native-vector-icons/) |
+> [React Native Tab View](https://reactnavigation.org/docs/tab-view)

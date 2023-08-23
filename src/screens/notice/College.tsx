@@ -1,14 +1,37 @@
-import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
+import {View, FlatList, StyleSheet} from 'react-native';
+
+import NoticeCard from '../../components/NoticeCard';
+import {useNoticeContext} from '../../contexts/Notice';
 
 const College = () => {
+  const {collegeNotices} = useNoticeContext();
+
   return (
-    <View>
-      <Text>College</Text>
+    <View style={styles.container}>
+      <FlatList
+        data={collegeNotices}
+        renderItem={({item}) => (
+          <NoticeCard
+            id={item.id}
+            title={item.title}
+            image={item?.image}
+            description={item.description}
+            tag={item.tag}
+            createdAt={item.createdAt}
+          />
+        )}
+      />
     </View>
   );
 };
 
-export default College;
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 10,
+    backgroundColor: '#090c13',
+  },
+});
 
-const styles = StyleSheet.create({});
+export default College;

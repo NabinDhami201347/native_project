@@ -1,11 +1,11 @@
 import {StyleSheet, View} from 'react-native';
-import React from 'react';
 
-import ProfileIcon from '../components/profile/ProfileCard';
+import ProfileIcon from '../components/profile/ProfileIcon';
 import Slider from '../components/custom/CustomSlider';
 import {useAuthContext} from '../contexts/Auth';
 import {LargeHeading} from '../components/custom/CustomHeading';
 import HomeItems from '../components/home/HomeItems';
+import {COLORS} from '../constants/colors';
 
 const Home = () => {
   const {user} = useAuthContext();
@@ -17,7 +17,7 @@ const Home = () => {
         <ProfileIcon />
       </View>
 
-      <View style={{marginTop: 100}}>
+      <View>
         <Slider />
         <HomeItems />
       </View>
@@ -30,13 +30,14 @@ export default Home;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#090C13',
+    backgroundColor: COLORS.BACKGROUND_DARK,
   },
   topbar: {
+    padding: 20,
+    marginVertical: 40,
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: '#212121',
     justifyContent: 'space-between',
-    padding: 20,
   },
 });

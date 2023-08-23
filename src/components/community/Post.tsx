@@ -1,5 +1,4 @@
-import React, {useState} from 'react';
-import {Card} from 'react-native-paper';
+import React from 'react';
 import {View, Text, Image, TouchableOpacity, StyleSheet} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {imageuri} from '../../api';
@@ -50,9 +49,23 @@ const Post: React.FC<PostProps> = ({
             flexDirection: 'row',
             alignItems: 'center',
             gap: 10,
-            marginVertical: 10,
+            marginTop: 10,
           }}>
-          <Image source={{uri: `${imageuri}/${image}`}} style={styles.avatar} />
+          {profileImage ? (
+            <Image
+              source={{uri: `${imageuri}${profileImage}`}}
+              style={styles.avatar}
+              resizeMode="cover"
+            />
+          ) : (
+            <Image
+              source={{
+                uri: `https://avatars.githubusercontent.com/u/95552086?v=4`,
+              }}
+              style={styles.avatar}
+              resizeMode="cover"
+            />
+          )}
           <Text style={styles.authorDate}>{author}</Text>
           <Text style={styles.authorDate}>{formatDate(date)}</Text>
         </View>
@@ -65,14 +78,15 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: '#212121',
     color: '#ffffff',
-    marginBottom: 16,
+    marginBottom: 10,
     borderRadius: 8,
+    borderWidth: 1,
+    borderColor: 'gray',
   },
   image: {
     width: '100%',
     height: 200,
     borderRadius: 5,
-    marginBottom: 12,
   },
   postHeader: {
     padding: 10,

@@ -11,13 +11,7 @@ interface PostCardProps {
   image?: string;
 }
 
-const PostCard: React.FC<PostCardProps> = ({
-  title,
-  description,
-  author,
-  date,
-  image,
-}) => {
+const PostCard: React.FC<PostCardProps> = ({author, date, image}) => {
   return (
     <View style={styles.container}>
       {image && (

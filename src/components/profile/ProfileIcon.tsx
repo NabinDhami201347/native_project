@@ -1,9 +1,8 @@
 import React from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {Image, StyleSheet, TouchableOpacity, View} from 'react-native';
-
-import {imageuri} from '../api';
-import {useAuthContext} from '../contexts/Auth';
+import {useAuthContext} from '../../contexts/Auth';
+import {imageuri} from '../../api';
 
 const ProfileIcon = () => {
   const navigation = useNavigation();
@@ -44,8 +43,8 @@ const styles = StyleSheet.create({
     borderRadius: 100,
   },
   image: {
-    width: 30,
-    height: 30,
+    width: 40,
+    height: 40,
     borderRadius: 100,
   },
 });

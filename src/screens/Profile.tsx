@@ -2,9 +2,11 @@ import React from 'react';
 import {StyleSheet, View, TouchableOpacity} from 'react-native';
 
 import {useAuthContext} from '../contexts/Auth';
+
 import ProfileCard from '../components/profile/ProfileCard';
 import CustomCard from '../components/custom/CustomCard';
 import CustomButton from '../components/custom/CustomButton';
+import {COLORS} from '../constants/colors';
 
 const ProfileScreen = ({navigation}: any) => {
   const {removeTokens} = useAuthContext();
@@ -59,7 +61,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    backgroundColor: '#090C13',
+    backgroundColor: COLORS.BACKGROUND_DARK,
     paddingHorizontal: 20,
   },
 });

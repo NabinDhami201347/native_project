@@ -1,6 +1,7 @@
 import React from 'react';
 import {FlatList, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import {useBookContext} from '../../contexts/Book';
+import {COLORS} from '../../constants/colors';
 
 const Categories = () => {
   const {tags, selectedTag, filterBooksByTag} = useBookContext();
@@ -44,7 +45,8 @@ const Categories = () => {
 const styles = StyleSheet.create({
   container: {
     justifyContent: 'center',
-    paddingVertical: 10,
+    backgroundColor: COLORS.BACKGROUND_DARK,
+    padding: 10,
   },
   tag: {
     paddingHorizontal: 20,

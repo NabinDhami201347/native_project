@@ -16,6 +16,7 @@ import {
 import mime from 'mime';
 import {useAuthContext} from '../../contexts/Auth';
 import {imageuri, protectedInstance} from '../../api';
+import CustomButton from '../custom/CustomButton';
 
 const ProfileCard = () => {
   const [selectedImage, setSelectedImage] =
