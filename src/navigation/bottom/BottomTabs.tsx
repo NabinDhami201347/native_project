@@ -1,9 +1,16 @@
 import CustomBottomTab from './components/shared/BottomTabs/CustomBottomTab';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-
-import {Community, Home, Library, Profile} from '../../screens';
-import NoticesTabs from '../NoticesTabs';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
+
+import {
+  CalendarScreen,
+  Community,
+  CommunityPost,
+  Home,
+  Library,
+  Profile,
+} from '../../screens';
+import NoticesTabs from '../NoticesTabs';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -15,6 +22,18 @@ const StackNav = () => {
       screenOptions={{headerShown: false}}>
       <Stack.Screen name="HomeS" component={Home} />
       <Stack.Screen name="Profile" component={Profile} />
+      <Stack.Screen name="Calendar" component={CalendarScreen} />
+    </Stack.Navigator>
+  );
+};
+
+const CommunityStack = () => {
+  return (
+    <Stack.Navigator
+      initialRouteName="CommunityS"
+      screenOptions={{headerShown: false}}>
+      <Stack.Screen name="CommunityS" component={Community} />
+      <Stack.Screen name="CommunityPost" component={CommunityPost} />
     </Stack.Navigator>
   );
 };
@@ -44,7 +63,7 @@ const BottomTabs = () => {
         <Tab.Screen
           options={{tabBarLabel: 'Community'}}
           name="Community"
-          component={Community}
+          component={CommunityStack}
         />
       </Tab.Group>
     </Tab.Navigator>
